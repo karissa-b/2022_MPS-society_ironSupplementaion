@@ -11,6 +11,10 @@ navbar:
     href: FeDex_tfr1a.html
   - text: FeDex_fth1b
     href: FeDex_fth1b.html
+  - text: FeDex_irf7
+    href: FeDex_irf7.html
+  - text: FeDex_fth1a_384well
+    href: FeDex_fth1a_384well.html
 output:
   workflowr::wflow_html:
     toc: yes
