@@ -8,4 +8,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
+Put in grant info here
+
+* qPCR analysis
+* behaviour

@@ -5,8 +5,8 @@ navbar:
   left:
   - text: Home
     href: index.html
-  - text: About
-    href: about.html
+  - text: FeDex_trf1a
+    href: FeDex_trf1a.html
   - text: License
     href: license.html
 output:
@@ -15,3 +15,4 @@ output:
     toc_float: yes
     theme: cosmo
     highlight: textmate
+    code_folding: hide

@@ -14,8 +14,8 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   fig.align = "center", 
-  out.width ="75%", 
-  out.height = "75%"
+  out.width ="100%", 
+  out.height = "100%"
 )
 ```
 
@@ -34,6 +34,8 @@ library(ggbeeswarm)
 library(ggforce)
 library(kableExtra)
 library(emmeans)
+library(performance)
+library(see) # performance dependency
 library(car)
 
 # set the default theme for ggplot as theme_bw
@@ -42,7 +44,7 @@ theme_set(theme_bw())
 
 # Introduction
 
-Here, we are assessing the level of *tfr1a* transcripts in the brains of 6 month old zebrafish. These zebrafish are either heterozygous (unaffected) or homozygous (MPS-IIIB) for the A603fs mutation in *naglu*. They were treated with either vehicle (0.85% saline), 0.5 μg iron-dextran or 1 μg of iron-dextran . Then, they were allowed to recover alone in a pair mate tank for either 7 or 14 days. Here, we will determine whether there are significant changes to the expression of *tfr1a* with any of the combinations described here. 
+Here, we are assessing the level of *tfr1a* transcripts in the brains of 6 month old zebrafish. These zebrafish are either heterozygous (unaffected) or homozygous (MPS-IIIB) for the A603fs mutation in *naglu*. They were treated with either vehicle (0.85% saline), 0.5 μg iron-dextran or 1 μg of iron-dextran . Then, they were allowed to recover alone in a pair mate tank for either 7 or 14 days. Here, we will determine whether there are significant changes to the expression of *tfr1a* due to *naglu* genotype and treatment. 
 
 The *tfr1a* transcript has an iron responsive element in the 3' untranslated region (3' UTR), and is predicted to increase under high iron levels. 
 
@@ -66,16 +68,40 @@ data %<>%
   
 ```
 
+# Summary of samples
+
+The plot below suymmarises the metadata of the fish we tested here. 
+
+```{r}
+meta %>% 
+  group_by(genotype, sex, treatment, dpi) %>% 
+  mutate(n = n()) %>% 
+  ggplot(aes(x = genotype)) +
+  geom_bar(aes(fill = treatment), 
+           position = "dodge", 
+           colour = "black") +
+  facet_wrap(~dpi+sex, nrow = 1) +
+  scale_fill_viridis_d() + 
+  theme(legend.position = "bottom")+
+  labs(title = "Number of fish per genotype, sex, treatment and dpi in the qPCR analysis",
+       y = "Number of fish", 
+       x = "")
+```
 
 # Check technical replicates of actin (housekeeping gene)
 
 The following plot below shows the technical replicates of the actin gene. There seem to be some dodgy ones, likely due to pipetting error or some contamination of the RNA. The technical replicate which appears to be the problematic one will be omitted. 
 
+
+The no template control (NTC), has very high varation and CT value. This is normal though. 
+
 ```{r}
 # plot technical replicates for actin by plate. 
 data %>% 
+  dplyr::filter(fish_id %in% c("NTC", seq(1:100))) %>% # omit those dilution PCRs that ewan was playing with
   dplyr::filter(`Target Name` == "actin") %>% 
   unique %>% 
+  mutate(fish_id = factor(fish_id, levels = c("NTC", seq(1:100)))) %>% # put in order
   ggplot(aes(x = fish_id, y = CT)) + 
   geom_point() +
   geom_boxplot(fill = NA) +
@@ -83,16 +109,21 @@ data %>%
                    data = . %>% 
                        dplyr::filter(`Ct SD` > 1)) +
   ggtitle("actin technical replicates", 
-          subtitle = "fish are labelled if the standard deviation of the tech reps is > 1")
+          subtitle = "Well position is  labelled if the standard deviation of the tech reps is > 1")
 ```
 
 
 # Check technical replicates of tfr1a
+
+The following plot below shows the technical replicates of the tfr1a gene. Again, there seem to be some dodgy ones, likely due to pipetting error or some contamination of the RNA. The technical replicate which appears to be the problematic one will be omitted. 
+
 ```{r}
 # plot technical replicates for tfr1a by plate. 
 data %>% 
+  dplyr::filter(fish_id %in% c("NTC", seq(1:100))) %>% # omit those dilution PCRs that ewan was playing with
   dplyr::filter(`Target Name` == "tfr1a") %>% 
   unique %>% 
+  mutate(fish_id = factor(fish_id, levels = c("NTC", seq(1:100)))) %>% # put in order
   ggplot(aes(x = fish_id, y = CT)) + 
   geom_point() +
   geom_boxplot(fill = NA) +
@@ -104,6 +135,10 @@ data %>%
 ```
 
 # omit the apparent outliers
+
+Upon inspection of the two tech replicate plots, I will omit the following replicates:
+"C1", "E13", "I1", "K13", "M1", "C4", "E4", "G4", "I4", "K4", "M4"
+
 ```{r}
 data_clean <- data %>% 
   unique() %>% 
@@ -112,40 +147,43 @@ data_clean <- data %>%
     !(`Well Position` %in% c("C1", "E13", "I1", "K13", "M1", # actin outliers
                              "C4", "E4", "G4", "I4", "K4", "M4")) # tfr1a outliers
   )
+  
 ```
 
 # repeat the techrep plots
 
+Repeating the technical replicate plots and now the spread of the technical replicates per fish look good. 
+
 ```{r}
-# plot technical replicates for actin by plate. 
+
+ggarrange(
 data_clean %>% 
+  dplyr::filter(fish_id %in% c("NTC", seq(1:100))) %>% # omit those dilution PCRs that ewan was playing with
   dplyr::filter(`Target Name` == "actin") %>% 
   unique %>% 
+  mutate(fish_id = factor(fish_id, levels = c("NTC", seq(1:100)))) %>% # put in order
   ggplot(aes(x = fish_id, y = CT)) + 
   geom_point() +
   geom_boxplot(fill = NA) +
-  ggtitle("tfr1a technical replicates", 
-          subtitle = "after omitting outliers") 
-```
+  ggtitle("tfr1a technical replicates"), 
 
-
-# Check technical replicates of tfr1a
-```{r}
-# plot technical replicates for tfr1a by plate. 
 data_clean %>% 
+  dplyr::filter(fish_id %in% c("NTC", seq(1:100))) %>% # omit those dilution PCRs that ewan was playing with
   dplyr::filter(`Target Name` == "tfr1a") %>% 
   unique %>% 
+  mutate(fish_id = factor(fish_id, levels = c("NTC", seq(1:100)))) %>% 
   ggplot(aes(x = fish_id, y = CT)) + 
   geom_point() +
   geom_boxplot(fill = NA) +  
-  ggtitle("tfr1a technical replicates", 
-          subtitle = "after omitting outliers")
+  ggtitle("tfr1a technical replicates"), 
+
+ncol = 1
+)
 ```
 
 # Plot the results 
 
 Expression of tfr1a appears to increase with higher amounts of iron. 
-
 
 ```{r}
 data_clean %>% 
@@ -160,12 +198,15 @@ data_clean %>%
   mutate(dct = tfr1a - actin ) %>% 
     ggplot(aes(x = genotype, y = dct, fill = genotype)) +
   geom_boxplot(aes(fill = genotype), 
+               alpha = 0.5,
                outlier.shape = NA) +
   geom_point(size =3, 
              aes(shape = sex)) +
-  scale_fill_viridis_d(begin = 0.5) +
+  scale_fill_viridis_d(end = 0.5) +
   facet_wrap(~dpi+treatment, nrow = 1) +
-  ggtitle("tfr1a", 
+  theme(legend.position = "bottom") +
+  scale_y_continuous(limits = c(0,7)) +
+  ggtitle("boxplots of tfr1a", 
           subtitle = "expression of tfr1a relative to beta actin") 
 
 data_clean %>% 
@@ -193,23 +234,25 @@ data_clean %>%
   geom_point(
              alpha=0.9, 
              position = position_jitterdodge(jitter.width = .1, dodge.width = 1),
-             size = 3,
+             size = 3
              
   ) +
   facet_wrap(~dpi, nrow = 1) +
   scale_fill_viridis_d(end = 0.5) +
   scale_colour_viridis_d(end = 0.5) +
-    ggtitle("tfr1a", 
+    ggtitle("barplots showig mean expression of tfr1a", 
           subtitle = "expression of tfr1a relative to beta actin") 
 ```
 
 
 # Statistical test
 
-While the effect of genotype*treatment*dpi is not significant, this is likely due to being very underpowered. 
+## Check model assumptions
+
+I fit a linear model and checked assumptions using the `performance` package. Overall, they dont look too bad. Some colinearity is observed. Unsure if this is an issue as of yet. Is it because we have very low n per genotype, treatment and dpi?
 
 ```{r}
-
+# fit the lm (interactive model), 
 fit <- 
   data_clean %>% 
   unique() %>% 
@@ -223,11 +266,25 @@ fit <-
   mutate(dct = tfr1a - actin )   %>% 
   lm(dct ~ genotype*treatment*dpi, 
      data = . )
-
-Anova(fit) %>%
-  kable %>% 
-  kable_styling(full_width = F)
-
 ```
+
+
+```{r, fig.height=15}
+# check assumptions
+# overall not too bad, collinearity is observed. 
+check_model(fit)
+```
+
+Nevertheless, I checked the significnace of the effects and their interactions using type II Anova. While the effect of `genotype * treatment * dpi` is not significant, this is likely due to being very underpowered. 
+
+```{r}
+# test for significance of effects 
+Anova(fit) %>%
+  dplyr::rename(pval = "Pr(>F)") %>% 
+  kable(caption = "Anova Table (Type II tests)") %>% 
+  kable_styling(full_width = F)
+```
+
+
 
 
