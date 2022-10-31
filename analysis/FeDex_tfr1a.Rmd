@@ -1,0 +1,233 @@
+---
+title: "FeDex_tfr1a"
+author: "Karissa Barthelson"
+date: "2022-10-25"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  autodep = TRUE,
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center", 
+  out.width ="75%", 
+  out.height = "75%"
+)
+```
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(here)
+library(magrittr)
+library(scales)
+library(readxl)
+library(ggpubr)
+library(ggeasy)
+library(ggrepel)
+library(ggfortify)
+library(ggbeeswarm)
+library(ggforce)
+library(kableExtra)
+library(emmeans)
+library(car)
+
+# set the default theme for ggplot as theme_bw
+theme_set(theme_bw())
+```
+
+# Introduction
+
+Here, we are assessing the level of *tfr1a* transcripts in the brains of 6 month old zebrafish. These zebrafish are either heterozygous (unaffected) or homozygous (MPS-IIIB) for the A603fs mutation in *naglu*. They were treated with either vehicle (0.85% saline), 0.5 μg iron-dextran or 1 μg of iron-dextran . Then, they were allowed to recover alone in a pair mate tank for either 7 or 14 days. Here, we will determine whether there are significant changes to the expression of *tfr1a* with any of the combinations described here. 
+
+The *tfr1a* transcript has an iron responsive element in the 3' untranslated region (3' UTR), and is predicted to increase under high iron levels. 
+
+```{r}
+# read in daa
+data <- read_xlsx("data/2022-10-17_215549_KS_tfr1a_experimental_plate_1_384well.xlsx", 
+                  sheet = "Results", skip = 40) 
+
+meta <- read_csv("data/metadata.csv") %>% 
+  mutate(fish_id = as.character(fish_id), 
+         treatment = factor(treatment, 
+                            levels = c("saline", 
+                                       "0.5 ug iron-dextran", 
+                                       "1 ug iron-dextran"))
+  )
+
+data %<>%  
+  dplyr::rename("fish_id" = "Sample Name") %>% 
+  left_join(meta) %>% 
+  dplyr::select(colnames(meta), CT, everything()) # put the metadata first for easy viewing
+  
+```
+
+
+# Check technical replicates of actin (housekeeping gene)
+
+The following plot below shows the technical replicates of the actin gene. There seem to be some dodgy ones, likely due to pipetting error or some contamination of the RNA. The technical replicate which appears to be the problematic one will be omitted. 
+
+```{r}
+# plot technical replicates for actin by plate. 
+data %>% 
+  dplyr::filter(`Target Name` == "actin") %>% 
+  unique %>% 
+  ggplot(aes(x = fish_id, y = CT)) + 
+  geom_point() +
+  geom_boxplot(fill = NA) +
+  geom_label_repel(aes(label = `Well Position`), # only label the variable fish
+                   data = . %>% 
+                       dplyr::filter(`Ct SD` > 1)) +
+  ggtitle("actin technical replicates", 
+          subtitle = "fish are labelled if the standard deviation of the tech reps is > 1")
+```
+
+
+# Check technical replicates of tfr1a
+```{r}
+# plot technical replicates for tfr1a by plate. 
+data %>% 
+  dplyr::filter(`Target Name` == "tfr1a") %>% 
+  unique %>% 
+  ggplot(aes(x = fish_id, y = CT)) + 
+  geom_point() +
+  geom_boxplot(fill = NA) +
+  geom_label_repel(aes(label = `Well Position`), # only label the variable fish
+                   data = . %>% 
+                       dplyr::filter(`Ct SD` > 1)) +
+  ggtitle("tfr1a technical replicates", 
+          subtitle = "fish are labelled if the standard deviation of the tech reps is > 1")
+```
+
+# omit the apparent outliers
+```{r}
+data_clean <- data %>% 
+  unique() %>% 
+  dplyr::filter(
+    fish_id != "20", 
+    !(`Well Position` %in% c("C1", "E13", "I1", "K13", "M1", # actin outliers
+                             "C4", "E4", "G4", "I4", "K4", "M4")) # tfr1a outliers
+  )
+```
+
+# repeat the techrep plots
+
+```{r}
+# plot technical replicates for actin by plate. 
+data_clean %>% 
+  dplyr::filter(`Target Name` == "actin") %>% 
+  unique %>% 
+  ggplot(aes(x = fish_id, y = CT)) + 
+  geom_point() +
+  geom_boxplot(fill = NA) +
+  ggtitle("tfr1a technical replicates", 
+          subtitle = "after omitting outliers") 
+```
+
+
+# Check technical replicates of tfr1a
+```{r}
+# plot technical replicates for tfr1a by plate. 
+data_clean %>% 
+  dplyr::filter(`Target Name` == "tfr1a") %>% 
+  unique %>% 
+  ggplot(aes(x = fish_id, y = CT)) + 
+  geom_point() +
+  geom_boxplot(fill = NA) +  
+  ggtitle("tfr1a technical replicates", 
+          subtitle = "after omitting outliers")
+```
+
+# Plot the results 
+
+Expression of tfr1a appears to increase with higher amounts of iron. 
+
+
+```{r}
+data_clean %>% 
+  unique() %>% 
+  dplyr::select(colnames(meta), `Target Name`, CT) %>% 
+  dplyr::filter(genotype %in% c("het", "hom")) %>% # only select fish of interest
+  group_by(fish_id, `Target Name`) %>% 
+  mutate(aveCT = mean(CT)) %>% 
+  dplyr::select(-CT) %>% 
+  unique %>% 
+  spread(`Target Name`, aveCT) %>% 
+  mutate(dct = tfr1a - actin ) %>% 
+    ggplot(aes(x = genotype, y = dct, fill = genotype)) +
+  geom_boxplot(aes(fill = genotype), 
+               outlier.shape = NA) +
+  geom_point(size =3, 
+             aes(shape = sex)) +
+  scale_fill_viridis_d(begin = 0.5) +
+  facet_wrap(~dpi+treatment, nrow = 1) +
+  ggtitle("tfr1a", 
+          subtitle = "expression of tfr1a relative to beta actin") 
+
+data_clean %>% 
+  unique() %>% 
+  dplyr::select(colnames(meta), `Target Name`, CT) %>% 
+  dplyr::filter(genotype %in% c("het", "hom")) %>% # only select fish of interest
+  group_by(fish_id, `Target Name`) %>% 
+  mutate(aveCT = mean(CT)) %>% 
+  dplyr::select(-CT) %>% 
+  unique %>% 
+  spread(`Target Name`, aveCT) %>% 
+  mutate(dct = tfr1a - actin, 
+         dpi = case_when(
+           dpi == "7" ~ "7 dpi",
+           dpi == "14" ~ "14 dpi"
+         ) %>% 
+           factor(levels = c("7 dpi", "14 dpi")), 
+         sex = factor(sex, levels = c("female", "male"))
+         ) %>% 
+  ggplot(aes(x = treatment, y = dct, fill = genotype, colour = genotype)) +
+  stat_summary(fun=mean, # add mean bar plot
+               alpha = 0.5,
+               geom="bar", 
+               position = "dodge") +
+  geom_point(
+             alpha=0.9, 
+             position = position_jitterdodge(jitter.width = .1, dodge.width = 1),
+             size = 3,
+             
+  ) +
+  facet_wrap(~dpi, nrow = 1) +
+  scale_fill_viridis_d(end = 0.5) +
+  scale_colour_viridis_d(end = 0.5) +
+    ggtitle("tfr1a", 
+          subtitle = "expression of tfr1a relative to beta actin") 
+```
+
+
+# Statistical test
+
+While the effect of genotype*treatment*dpi is not significant, this is likely due to being very underpowered. 
+
+```{r}
+
+fit <- 
+  data_clean %>% 
+  unique() %>% 
+  dplyr::select(colnames(meta), `Target Name`, CT) %>% 
+  dplyr::filter(genotype %in% c("het", "hom")) %>% # only select fish of interest
+  group_by(fish_id, `Target Name`) %>% 
+  mutate(aveCT = mean(CT)) %>% 
+  dplyr::select(-CT) %>% 
+  unique %>% 
+  spread(`Target Name`, aveCT) %>% 
+  mutate(dct = tfr1a - actin )   %>% 
+  lm(dct ~ genotype*treatment*dpi, 
+     data = . )
+
+Anova(fit) %>%
+  kable %>% 
+  kable_styling(full_width = F)
+
+```
+
+
