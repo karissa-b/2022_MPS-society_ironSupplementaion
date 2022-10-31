@@ -1,0 +1,278 @@
+---
+title: "FeDex_fth1a"
+author: "Karissa Barthelson"
+date: "2022-10-31"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  autodep = TRUE,
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center", 
+  out.width ="100%", 
+  out.height = "100%"
+)
+```
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(here)
+library(magrittr)
+library(scales)
+library(readxl)
+library(ggpubr)
+library(ggeasy)
+library(ggrepel)
+library(ggfortify)
+library(ggbeeswarm)
+library(ggforce)
+library(kableExtra)
+library(emmeans)
+library(performance)
+library(see) # performance dependency
+library(car)
+
+# set the default theme for ggplot as theme_bw
+theme_set(theme_bw())
+```
+
+
+# Introduction
+
+Here, we are assessing the level of *fth1a* transcripts in the brains of 6 month old zebradfish. These zebrafish are either heterozygous (unaffected) or homozygous (MPS-IIIB) for the A603fs mutatin in *naglu*. They were treated with either vehicle (0.85% saline), 0.5ug iron-dextran or 1 ug of iron-dextran. Then, they were allowed to recover alone in a pair mate tank for either 7 or 14 days. Here, we will determine whether there are significant changes to the expression of *fth1a* with any of the combinations described. 
+
+Ewan did this by qPCR (using 96 well plates). The plot below summarises the number of fish in the study. 
+
+```{r}
+# read in data
+data <- read_xlsx("data/fth1a plate 1-7 analysis 1.xlsx") %>% 
+    mutate(fish_id = as.character(fish_id), 
+         treatment = factor(treatment, 
+                            levels = c("saline", 
+                                       "0.5 ug iron-dextran", 
+                                       "1 ug iron-dextran"))
+    )
+
+# define the names of the columns which have metadata in it. 
+# will be helpful when selecting cols later
+metacols <- colnames(data)[1:8]
+```
+
+The plot below summarizes the metadata of the fish we tested here. 
+
+```{r}
+data %>% 
+  dplyr::select(metacols) %>% 
+  dplyr::filter(Plate %in% seq(1:4)) %>% # only keep first 4 plates to strart with. talk about the others later
+  group_by(genotype, sex, treatment, dpi) %>% 
+  mutate(n = n()) %>% 
+  ggplot(aes(x = genotype)) +
+  geom_bar(aes(fill = treatment), 
+           position = "dodge", 
+           colour = "black") +
+  facet_wrap(~dpi+sex, nrow = 1) +
+  scale_fill_viridis_d() + 
+  theme(legend.position = "bottom")+
+  labs(title = "Number of fish per genotype, sex, treatment and dpi in the qPCR analysis",
+       y = "Number of fish", 
+       x = "")
+```
+
+Becuase there was so many fish, ewan had to split up the samples across multiple plates. 
+
+```{r}
+data %>% 
+  dplyr::select(metacols) %>% 
+  dplyr::filter(Plate %in% seq(1:4)) %>% # only keep first 4 plates to strart with. talk about the others later
+  group_by(genotype, sex, treatment, dpi, Plate) %>% 
+  mutate(n = n(), 
+         Plate = paste("Plate", Plate)) %>% 
+  ggplot(aes(x = genotype)) +
+  geom_bar(aes(fill = treatment), 
+           position = "dodge", 
+           colour = "black") +
+  facet_wrap(~dpi+Plate, nrow = 1) +
+  scale_fill_viridis_d() + 
+  theme(legend.position = "bottom")+
+  labs(title = "Number of fish per genotype, sex, treatment and dpi in the qPCR analysis",
+       y = "Number of fish", 
+       x = "")
+```
+
+
+# Check technical replicates of actin (housekeeping gene)
+
+The following plot below shows the technical replicates of the actin gene. There seem to be some dodgy ones, particularly those on Plate 4, likely due to pipetting error or some contamination of the RNA. The technical replicate which appears to be the problematic one will be omitted. 
+
+```{r}
+# plot technical replicates for actin by plate. 
+data %>% 
+  dplyr::filter(Keep == "Y") %>% 
+  dplyr::filter(Plate %in% c(1, 2, 3, 4)) %>% # only look at the ones ewan did first. Will get to plates 5-7 later
+  dplyr::select(all_of(metacols), starts_with("actin")) %>% 
+  gather(key = "actin", value = "ct", starts_with("actin ct")) %>% 
+  dplyr::filter(ct != "Undetermined") %>% 
+  mutate(fish_id = factor(fish_id, levels = c("NTC", seq(1:100))), # put in order
+         ct = as.numeric(ct), 
+         actin = str_remove(actin, pattern = "actin ct ") 
+         ) %>% 
+  group_by(fish_id) %>% 
+  mutate(var = sd(ct)) %>% 
+  ggplot(aes(x = fish_id, y = ct)) + 
+  geom_point() +
+  geom_boxplot(fill = NA) +
+  geom_label_repel(aes(label = paste0(fish_id, "_", actin)), # only label the variable fish
+                   data = . %>% 
+                     dplyr::filter(var > 1)) +
+  facet_wrap(~Plate, scales = "free_x", nrow = 1) +
+  ggtitle("actin technical replicates", 
+          subtitle = "fish are labelled if the standard deviation of the tech reps is > 1")
+```
+
+
+# Check technical replicates of fth1a
+
+Like for actin, the technical replicates for plate 3 and 4 look dodgy. We think something has happened during those PCRs. 
+
+```{r}
+# plot technical replicates for fth1a by plate. 
+data %>% 
+  dplyr::filter(Keep == "Y") %>% 
+  dplyr::filter(Plate %in% c(1, 2, 3, 4)) %>% # only look at the ones ewan did first. Will get to plates 5-7 later
+  dplyr::select(all_of(metacols), starts_with("fth1a")) %>% 
+  gather(key = "fth1a", value = "ct", starts_with("fth1a ct")) %>% 
+  dplyr::filter(ct != "Undetermined") %>% 
+  mutate(fish_id = factor(fish_id, levels = c("NTC", seq(1:100))), # put in order
+         ct = as.numeric(ct), 
+         actin = str_remove(fth1a, pattern = "fth1a ct ") 
+         ) %>% 
+  group_by(fish_id) %>% 
+  mutate(var = sd(ct)) %>% 
+  ggplot(aes(x = fish_id, y = ct)) + 
+  geom_point() +
+  geom_boxplot(fill = NA) +
+  geom_label_repel(aes(label = paste0(fish_id, "_", fth1a)), # only label the variable fish
+                   data = . %>% 
+                     dplyr::filter(var > 1)) +
+  facet_wrap(~Plate, scales = "free_x", nrow = 1) +
+  ggtitle("fth1a technical replicates", 
+          subtitle = "fish are labelled if the standard deviation of the tech reps is > 1")
+```
+
+# Repeating plates 3 + 4
+
+Ewan repeated the qPCRs which were on plates 3 and 4 (now 5 and 6) A lot of variability is still obsereved for actin (which theoretically should be similar across samples as it is a house-keeping gene). 
+
+```{r, fig.cap="fish are labelled if the standard deviation of the tech reps is > 1"}
+
+ggarrange(
+  # actin
+data %>% 
+  dplyr::filter(Keep == "Y") %>% 
+  dplyr::filter(Plate %in% c(1, 2, 5, 6, 7)) %>% # only look at the ones ewan did first. Will get to plates 5-7 later
+  dplyr::select(all_of(metacols), starts_with("actin")) %>% 
+  gather(key = "actin", value = "ct", starts_with("actin ct")) %>% 
+  dplyr::filter(ct != "Undetermined") %>% 
+  mutate(fish_id = factor(fish_id, levels = c("NTC", seq(1:100))), # put in order
+         ct = as.numeric(ct), 
+         Plate = paste("Plate", Plate), 
+         actin = str_remove(actin, pattern = "actin ct ") 
+         ) %>% 
+  group_by(fish_id) %>% 
+  mutate(var = sd(ct)) %>% 
+  ggplot(aes(x = fish_id, y = ct)) + 
+  geom_point() +
+  geom_boxplot(fill = NA) +
+  geom_label_repel(aes(label = paste0(fish_id, "_", actin)), # only label the variable fish
+                   data = . %>% 
+                     dplyr::filter(var > 1)) +
+  facet_wrap(~Plate, scales = "free_x", nrow = 1) +
+  ggtitle("actin technical replicates"), 
+
+# fth1a
+data %>% 
+  dplyr::filter(Keep == "Y") %>% 
+  dplyr::filter(Plate %in% c(1, 2, 5, 6, 7)) %>% # only look at the ones ewan did first. Will get to plates 5-7 later
+  dplyr::select(all_of(metacols), starts_with("fth1a")) %>% 
+  gather(key = "fth1a", value = "ct", starts_with("fth1a ct")) %>% 
+  dplyr::filter(ct != "Undetermined") %>% 
+  mutate(fish_id = factor(fish_id, levels = c("NTC", seq(1:100))), # put in order
+         ct = as.numeric(ct), 
+         Plate = paste("Plate", Plate), 
+         fth1a = str_remove(fth1a, pattern = "fth1a ct ") 
+         ) %>% 
+  group_by(fish_id) %>% 
+  mutate(var = sd(ct)) %>% 
+  ggplot(aes(x = fish_id, y = ct)) + 
+  geom_point() +
+  geom_boxplot(fill = NA) +
+  geom_label_repel(aes(label = paste0(fish_id, "_", fth1a)), # only label the variable fish
+                   data = . %>% 
+                     dplyr::filter(var > 1)) +
+  facet_wrap(~Plate, scales = "free_x", nrow = 1) +
+  ggtitle("fth1a technical replicates"), 
+ncol = 1
+)
+```
+
+# Plot the results 
+
+The expression of fth1a appears to increase with increasing amounts of iron dose in the hets, and apparently appears to increase in the homs. However, there seems to be a substansial batch effect of `Plate`, particularly Plate 6. It is not confounded (i.e. Plate 6 contains only 14dpi, homs + hets, males + female, all treatments).  However, not enough of each metadata group is in this plate to faithfully remove this batch effect. 
+
+```{r}
+# Plot the results 
+data_clean <- data %>% 
+  dplyr::filter(Keep == "Y", 
+                Plate %in% c(1, 2, 5, 6, 7)) %>%  # only keep the ones ewan repeated
+  gather(key = "gene", value = "ct", contains(" ct ")) %>% 
+  mutate(fish_id = as.factor(fish_id), 
+         ct = as.numeric(ct),  
+         Plate = as.factor(Plate),
+         techrep = str_extract(gene, pattern = "[1|2|3]"), 
+         gene = str_remove(gene, pattern = " ct [1|2|3]") 
+  ) %>% 
+   dplyr::filter(ct != "Undetermined") %>% 
+  # filter the problematic techreps
+  dplyr::filter(
+    fish_id != 27, 
+    !(gene == "fth1a" & fish_id == 27 & techrep == 3),
+    !(gene == "fth1a" & fish_id == 7 & techrep == 3),
+
+    !(gene == "actin" & fish_id == 34 & techrep == 1)
+    ) %>% 
+  group_by(fish_id, gene) %>% 
+  mutate(aveCT = mean(ct)) %>% 
+  dplyr::select(-techrep, -ct) %>% 
+  unique() %>% 
+  spread(gene, aveCT) %>% 
+  mutate(dct = fth1a - actin ) %>% 
+  mutate(treatment = factor(treatment, 
+                            levels = c("saline", 
+                                       "0.5 ug iron-dextran", 
+                                       "1 ug iron-dextran"))
+         
+  )
+```
+
+
+```{r}
+data_clean %>% 
+ggplot(aes(x = genotype, y = dct, fill = genotype)) +
+  geom_boxplot(aes(fill = genotype), 
+               outlier.shape = NA) + 
+  geom_point(aes(shape = Plate), size =3) +
+  scale_fill_viridis_d(begin = 0.5) +
+  facet_wrap(~dpi+treatment, nrow = 1) 
+  # stat_compare_means(aes(label = paste0("p = ", ..p.format..) )) 
+
+```
+
+
+# Conclusion
+
+While some subtle changes to expression of *fth1a* might be present after i.p. injection of iron-dextran, the batch effect of plate is too substantial to be confident. Therefore, Ewan will attempt to repeat this experiment, doing all qPCRs at once using a 384 well plate, removing the batch effect completely. 

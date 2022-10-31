@@ -7,8 +7,8 @@ navbar:
     href: index.html
   - text: FeDex_trf1a
     href: FeDex_tfr1a.html
-  - text: License
-    href: license.html
+  - text: FeDex_fth1a
+    href: FeDex_fth1a.html
 output:
   workflowr::wflow_html:
     toc: yes
