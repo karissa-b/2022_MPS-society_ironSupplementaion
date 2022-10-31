@@ -1,0 +1,244 @@
+---
+title: "FeDex_tfr1b"
+author: "Karissa Barthelson"
+date: "2022-10-31"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  autodep = TRUE,
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center", 
+  out.width ="100%", 
+  out.height = "100%"
+)
+```
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(here)
+library(magrittr)
+library(scales)
+library(readxl)
+library(ggpubr)
+library(ggeasy)
+library(ggrepel)
+library(ggfortify)
+library(ggbeeswarm)
+library(ggforce)
+library(kableExtra)
+library(emmeans)
+library(MASS)
+library(performance)
+library(see) # performance dependency
+library(car)
+
+# set the default theme for ggplot as theme_bw
+theme_set(theme_bw())
+```
+
+# Introduction
+
+Here, we are assessing the level of *tfr1b* transcripts in the brains of 6 month old zebrafish. These zebrafish are either heterozygous (unaffected) or homozygous (MPS-IIIB) for the A603fs mutation in *naglu*. They were treated with either vehicle (0.85% saline), 0.5 μg iron-dextran or 1 μg of iron-dextran . Then, they were allowed to recover alone in a pair mate tank for either 7 or 14 days. Here, we will determine whether there are significant changes to the expression of *tfr1b* due to *naglu* genotype and treatment. 
+
+The *tfr1b* transcript has an iron responsive element in the 3' untranslated region (3' UTR), and is predicted to increase under high iron levels. 
+
+```{r}
+# read in daa
+data <- read_xlsx("data/2022-10-18_220606_tfr1b_experimental_plate_1_384well.xlsx", 
+                  sheet = "Results", skip = 40) 
+
+meta <- read_csv("data/metadata.csv") %>% 
+  mutate(fish_id = as.character(fish_id), 
+         treatment = factor(treatment, 
+                            levels = c("saline", 
+                                       "0.5 ug iron-dextran", 
+                                       "1 ug iron-dextran"))
+  )
+
+data %<>%  
+  dplyr::rename("fish_id" = "Sample Name") %>% 
+  left_join(meta) %>% 
+  dplyr::select(colnames(meta), CT, everything()) %>% # put the metadata first for easy viewing
+  mutate(CT = as.numeric(CT))
+```
+
+# Summary of samples
+
+The plot below suymmarises the metadata of the fish we tested here. 
+
+```{r}
+meta %>% 
+  group_by(genotype, sex, treatment, dpi) %>% 
+  mutate(n = n()) %>% 
+  ggplot(aes(x = genotype)) +
+  geom_bar(aes(fill = treatment), 
+           position = "dodge", 
+           colour = "black") +
+  facet_wrap(~dpi+sex, nrow = 1) +
+  scale_fill_viridis_d() + 
+  theme(legend.position = "bottom")+
+  labs(title = "Number of fish per genotype, sex, treatment and dpi in the qPCR analysis",
+       y = "Number of fish", 
+       x = "")
+```
+
+# Check technical replicates of actin (housekeeping gene)
+
+The following plot below shows the technical replicates of the actin gene. No problematic techincal replicates (well done Ewan :))
+
+The no template control (NTC), has very high varation and CT value. This is normal though. 
+
+```{r}
+# plot technical replicates for actin by plate. 
+data %>% 
+  dplyr::filter(fish_id %in% c("NTC", seq(1:100))) %>% # omit those dilution PCRs that ewan was playing with
+  dplyr::filter(`Target Name` == "actin") %>% 
+  unique %>% 
+  mutate(fish_id = factor(fish_id, levels = c("NTC", seq(1:100)))) %>% # put in order
+  ggplot(aes(x = fish_id, y = CT)) + 
+  geom_point() +
+  geom_boxplot(fill = NA) +
+  geom_label_repel(aes(label = `Well Position`), # only label the variable fish
+                   data = . %>% 
+                       dplyr::filter(`Ct SD` > 1)) +
+  ggtitle("actin technical replicates", 
+          subtitle = "Well position is  labelled if the standard deviation of the tech reps is > 1")
+```
+
+
+# Check technical replicates of tfr1b
+
+The following plot below shows the technical replicates of the tfr1a gene. Again,no problematic technical replicates (apart from the NTC, which is normal). 
+
+```{r}
+# plot technical replicates for tfr1a by plate. 
+data %>% 
+  dplyr::filter(fish_id %in% c("NTC", seq(1:100))) %>% # omit those dilution PCRs that ewan was playing with
+  dplyr::filter(`Target Name` == "tfr1b") %>% 
+  unique %>% 
+  mutate(fish_id = factor(fish_id, levels = c("NTC", seq(1:100)))) %>% # put in order
+  ggplot(aes(x = fish_id, y = CT)) + 
+  geom_point() +
+  geom_boxplot(fill = NA) +
+  geom_label_repel(aes(label = `Well Position`), # only label the variable fish
+                   data = . %>% 
+                       dplyr::filter(`Ct SD` > 1)) +
+  ggtitle("tfr1a technical replicates", 
+          subtitle = "fish are labelled if the standard deviation of the tech reps is > 1")
+```
+
+# Plot the results 
+
+Expression of tfr1b appears to increase with higher amounts of iron. 
+
+```{r}
+data %>% 
+  unique() %>% 
+  dplyr::select(colnames(meta), `Target Name`, CT) %>% 
+  dplyr::filter(genotype %in% c("het", "hom")) %>% # only select fish of interest
+  group_by(fish_id, `Target Name`) %>% 
+  mutate(aveCT = mean(CT)) %>% 
+  dplyr::select(-CT) %>% 
+  unique %>% 
+  spread(`Target Name`, aveCT) %>% 
+  mutate(dct = tfr1b - actin ) %>% 
+    ggplot(aes(x = genotype, y = dct, fill = genotype)) +
+  geom_boxplot(aes(fill = genotype), 
+               alpha = 0.5,
+               outlier.shape = NA) +
+  geom_point(size =3, 
+             aes(shape = sex)) +
+  scale_fill_viridis_d(end = 0.5) +
+  facet_wrap(~dpi+treatment, nrow = 1) +
+  theme(legend.position = "bottom") +
+  scale_y_continuous(limits = c(0,5.5)) +
+  ggtitle("boxplots of tfr1b", 
+          subtitle = "expression of tfr1b relative to beta actin") 
+
+data %>% 
+  unique() %>% 
+  dplyr::select(colnames(meta), `Target Name`, CT) %>% 
+  dplyr::filter(genotype %in% c("het", "hom")) %>% # only select fish of interest
+  group_by(fish_id, `Target Name`) %>% 
+  mutate(aveCT = mean(CT)) %>% 
+  dplyr::select(-CT) %>% 
+  unique %>% 
+  spread(`Target Name`, aveCT) %>% 
+  mutate(dct = tfr1b - actin, 
+         dpi = case_when(
+           dpi == "7" ~ "7 dpi",
+           dpi == "14" ~ "14 dpi"
+         ) %>% 
+           factor(levels = c("7 dpi", "14 dpi")), 
+         sex = factor(sex, levels = c("female", "male"))
+         ) %>% 
+  ggplot(aes(x = treatment, y = dct, fill = genotype, colour = genotype)) +
+  stat_summary(fun=mean, # add mean bar plot
+               alpha = 0.5,
+               geom="bar", 
+               position = "dodge") +
+  geom_point(
+             alpha=0.9, 
+             position = position_jitterdodge(jitter.width = .1, dodge.width = 1),
+             size = 3
+             
+  ) +
+  facet_wrap(~dpi, nrow = 1) +
+  scale_fill_viridis_d(end = 0.5) +
+  scale_colour_viridis_d(end = 0.5) +
+    ggtitle("barplots showig mean expression of tfr1b", 
+          subtitle = "expression of tfr1b relative to beta actin") 
+```
+
+
+# Statistical test
+
+## Check model assumptions
+
+I fit a linear model and checked assumptions using the `performance` package. The homogenity of variances plot looks kind of dodgy and so some model assumptions are probably a little violated. Also, the colinnearty issue. 
+
+```{r}
+# fit the lm (interactive model), 
+fit <- 
+  data %>% 
+  unique() %>% 
+  dplyr::select(colnames(meta), `Target Name`, CT) %>% 
+  dplyr::filter(genotype %in% c("het", "hom")) %>% # only select fish of interest
+  group_by(fish_id, `Target Name`) %>% 
+  mutate(aveCT = mean(CT)) %>% 
+  dplyr::select(-CT) %>% 
+  unique %>% 
+  spread(`Target Name`, aveCT) %>% 
+  mutate(dct = tfr1b - actin )   %>% 
+  lm(dct ~ genotype*treatment*dpi, 
+     data = . )
+```
+
+
+```{r, fig.height=15}
+# check assumptions
+# overall not too bad, collinearity is observed. 
+check_model(fit)
+```
+
+
+Nevertheless, I checked the significnace of the effects and their interactions using type II Anova. While the effect of `genotype * treatment * dpi` is appears to be significant, i take this with a grain of salt as the model isnt quite right ter and is underpowered. 
+
+```{r}
+# test for significance of effects 
+Anova(fit) %>%
+  dplyr::rename(pval = "Pr(>F)") %>% 
+  kable(caption = "Anova Table (Type II tests)") %>% 
+  kable_styling(full_width = F)
+```
+
+
+
+

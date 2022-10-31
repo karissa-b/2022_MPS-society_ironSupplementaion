@@ -5,10 +5,12 @@ navbar:
   left:
   - text: Home
     href: index.html
-  - text: FeDex_trf1a
-    href: FeDex_tfr1a.html
   - text: FeDex_fth1a
     href: FeDex_fth1a.html
+  - text: FeDex_tfr1a
+    href: FeDex_tfr1a.html
+  - text: FeDex_fth1b
+    href: FeDex_fth1b.html
 output:
   workflowr::wflow_html:
     toc: yes
