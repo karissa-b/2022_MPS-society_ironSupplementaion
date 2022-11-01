@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   fig.align = "center", 
-  fig.retina = 2,
+  fig.retina = 1,
   out.width ="100%", 
   out.height = "100%"
 )
@@ -506,7 +506,7 @@ final_data_long %>%
 
 Finally, want to vis within treatments
 
-```{r}
+```{r fig.height=12}
 final_data_long %>%
   dplyr::distinct(rel_alts, .keep_all = T) %>%
   mutate(binforvis = case_when(
@@ -541,6 +541,8 @@ Since the start time of the test doesnt have a logical pattern (i.e. mrore activ
 
 The bin has a highly signifdicant effect on the total turns. This is consistent with what we have seen in the past using this test. The fish are more active when they first enter the maze and it drops off as they become more accustomed to it. Some statistical evidence is obsered for the `genotypehom:treatment10 µg Fe-citrate`effect. However, I wonder is this is truly real, as we only had 3 hets. 
 
+
+
 ```{r}
 final_data_long %>%
   dplyr::distinct(rel_alts, .keep_all = T) %>%
@@ -558,10 +560,12 @@ final_data_long %>%
   .$coef %>%
   as.data.frame() %>% 
   dplyr::rename(pval = "Pr(>|z|)") %>% 
-  kable(caption = "Negative binomial GLM model coefficients.\n
-      None of the factors have a significant effect on the total number of turns" ) %>%
+  kable(caption = "Negative binomial GLM model coefficients") %>%
   kable_styling() %>% 
   row_spec(row = c(10,11), background = "#ccffef")
+
+#I'm not sure whther this model is right at this stage. The genotype x treatment x bin model would not run. 
+
 ```
 
 # time spent in each zone of the Y-maze
@@ -784,7 +788,7 @@ Anova(glm) %>%
 ## Vis 
 ### bin x genotype x treatment
 
-```{r}
+```{r, fig.height=10}
 print(emmeans(glm, ~ genotype * treatment * bin), type = "response") %>% 
   as_tibble() %>% 
   mutate(binforvis = case_when(
@@ -877,7 +881,7 @@ glm_reps %>%
 
 ## effect of genotype x treatment x bin
 
-```{r}
+```{r, fig.height=10}
 print(emmeans(glm_reps, ~ genotype * treatment * bin), type = "response") %>% 
   as_tibble() %>% 
   mutate(binforvis = case_when(
@@ -940,4 +944,6 @@ print(emmeans(glm_reps, specs = "L_R_bias"), type = "response") %>%
 ```
 
 # Conclusion
+
+At this stage, it is difficult to say whether the the treatment of ferric citrate is having any benefit on 6 month old naglu homozygous zebrafish.  
 

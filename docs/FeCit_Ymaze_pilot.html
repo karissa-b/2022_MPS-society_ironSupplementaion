@@ -351,7 +351,7 @@ div.tocify {
   <a href="FeDex_fth1a_384well.html">FeDex_fth1a_384well</a>
 </li>
 <li>
-  <a href="FeCit_Ymaze.html">FeCit_Ymaze_pilot</a>
+  <a href="FeCit_Ymaze_pilot.html">FeCit_Ymaze_pilot</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -424,7 +424,7 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -491,16 +491,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkarissab2022MPSsocietyironSupplementaiontreeb7abc796e7d02a7a4be253dd84d2505e43024ec7targetblankb7abc79a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/tree/b7abc796e7d02a7a4be253dd84d2505e43024ec7" target="_blank">b7abc79</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkarissab2022MPSsocietyironSupplementaiontree4656d3a662d2c45902057a71b5861843284092c1targetblank4656d3aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/tree/4656d3a662d2c45902057a71b5861843284092c1" target="_blank">4656d3a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkarissab2022MPSsocietyironSupplementaiontreeb7abc796e7d02a7a4be253dd84d2505e43024ec7targetblankb7abc79a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkarissab2022MPSsocietyironSupplementaiontree4656d3a662d2c45902057a71b5861843284092c1targetblank4656d3aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/tree/b7abc796e7d02a7a4be253dd84d2505e43024ec7" target="_blank">b7abc79</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/tree/4656d3a662d2c45902057a71b5861843284092c1" target="_blank">4656d3a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -510,16 +510,12 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/.DS_Store
-
-Untracked files:
-    Untracked:  analysis/FeCit_Ymaze_pilot.Rmd
-    Untracked:  code/FeCit-ymaze-rawDataProcessing.R
-    Untracked:  data/2022Oct19 ip injection FeCitrate naglu hom x het 6m meta.xlsx
-    Untracked:  data/ymaze/
+    Ignored:    data/ymaze/.DS_Store
+    Ignored:    data/ymaze/processed_data/.DS_Store
+    Ignored:    data/ymaze/raw_data/.DS_Store
 
 Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/FeCit_Ymaze_pilot.Rmd
 
 </code></pre>
 <p>
@@ -532,9 +528,69 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/FeCit_Ymaze_pilot.Rmd</code>) and HTML (<code>docs/FeCit_Ymaze_pilot.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/analysis/FeCit_Ymaze_pilot.Rmd" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+<td>
+addedbehav
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/karissa-b/2022_MPS-society_ironSupplementaion/4656d3a662d2c45902057a71b5861843284092c1/docs/FeCit_Ymaze_pilot.html" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+<td>
+addedbehav
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -1661,6 +1717,43 @@ final_data_summedoverbins%&lt;&gt;%
        y = &quot;Number of fish&quot;, 
        x = &quot;&quot;)</code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-6-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-6-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="visualisation-of-raw-data" class="section level1">
 <h1>Visualisation of raw data</h1>
@@ -1681,6 +1774,43 @@ final_data_summedoverbins%&lt;&gt;%
   theme(legend.position = &quot;bottom&quot;)  +
   ggtitle(&quot;Total number of 16 possible tetragrams performed by zebrafish in a Y-maze\nduring a 1 hour search period&quot;) </code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-7-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-7-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>We can also overlay the genotype boxplots as shown below. Looks like the heterozyous and homozygous fish perform more alternations than the WT fish. I will look into this more later in the analysis</p>
 <pre class="r"><code>final_data_summedoverbins %&gt;%
   dplyr::distinct(x, .keep_all = T) %&gt;%
@@ -1708,6 +1838,43 @@ final_data_summedoverbins%&lt;&gt;%
            alpha = 0, color= &quot;red&quot;) +
   ggtitle(&quot;Total number of 16 possible tetragrams performed by zebrafish in a Y-maze\nduring a 1 hour search period&quot;) </code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-8-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-8-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>The alternation tetragrams are the tetragram of interest (the measure of working memory). Below indicates the number of tetragrams performed by zerbafish across the 6 x 10 min blocks of the hour they spent in the maze.</p>
 <pre class="r"><code>final_data_long %&gt;%
   dplyr::distinct(rel_alts, .keep_all = T) %&gt;%
@@ -1732,6 +1899,43 @@ final_data_summedoverbins%&lt;&gt;%
   scale_colour_viridis_d(end = 0.75) +
   scale_fill_viridis_d(end = 0.75) </code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-9-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-9-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>   # geom_label_repel(aes(label = fish_id),
    #                 data = . %&gt;%
    #                   dplyr::filter(fish_id == 1))</code></pre>
@@ -1759,6 +1963,43 @@ final_data_summedoverbins%&lt;&gt;%
   scale_colour_viridis_d(end = 0.75) +
   scale_fill_viridis_d(end = 0.75) </code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-10-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-10-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="locomotor-defect" class="section level1">
 <h1>Locomotor defect</h1>
@@ -1796,6 +2037,43 @@ final_data_summedoverbins%&lt;&gt;%
        title = &quot;Total number of turns performed by fish in the Y-maze in 1 hour&quot;, 
        subtitle = &quot;According to treatment&quot;)</code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-11-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-11-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>The plot below is grouped by genotype rather than treartment. Not much difference between treatment groups within genotypes.</p>
 <pre class="r"><code>final_data_summedoverbins %&gt;%
   ungroup() %&gt;%
@@ -1819,6 +2097,43 @@ final_data_summedoverbins%&lt;&gt;%
        title = &quot;Total number of turns performed by fish in the Y-maze in 1 hour&quot;, 
        subtitle = &quot;According to treatment&quot;)</code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-12-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-12-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>I also want to look at whether there is a batch effect of test. There were a total of 6 tests (start times indicated in the plot) performed in one of two zantiks units (139 and 146). Each test contained 8 fish which were randomly assigned. A bit of fvariation is observed between start times, but this would be expected considering they are performed throughoutthe day, and have had sligtly different environmental conditions (e.g. ,vibrations from the construction, people talking out in the hall etc), as well as circadian differences.</p>
 <pre class="r"><code>final_data_summedoverbins %&gt;%
   ungroup() %&gt;%
@@ -1847,6 +2162,43 @@ final_data_summedoverbins%&lt;&gt;%
        title = &quot;Total number of turns performed by fish in the Y-maze in 1 hour&quot;, 
        subtitle = &quot;According to start time of day of the test&quot;)</code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-13-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
+Past versions of unnamed-chunk-13-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-13-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>I also had a look at whether the genotype and treatment groups could explain some of the apparent variation within tests. This does seem to be the case as observed in the fig below. the genotypes can sometimes show differences.</p>
 <pre class="r"><code>final_data_summedoverbins %&gt;%
   ungroup() %&gt;%
@@ -1878,6 +2230,43 @@ final_data_summedoverbins%&lt;&gt;%
        title = &quot;Total number of turns performed by fish in the Y-maze in 1 hour&quot;, 
        subtitle = &quot;According to start time of day of the test&quot;)</code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-14-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
+Past versions of unnamed-chunk-14-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-14-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Trying to determine whether the effect of treatment group and start time is more difficult to say, as there is often &lt; 2 fish per treatment group within a particular test. This is just due to the nature of performing this pilot experiment and will not be such as issue next time (when we only have 2 treatment groups, saline and iron)</p>
 <pre class="r"><code>final_data_summedoverbins %&gt;%
   ungroup() %&gt;%
@@ -1902,6 +2291,43 @@ final_data_summedoverbins%&lt;&gt;%
        title = &quot;Total number of turns performed by fish in the Y-maze in 1 hour&quot;, 
        subtitle = &quot;According to start time of day of the test&quot;)</code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-15-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
+Past versions of unnamed-chunk-15-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-15-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-15-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="statistical-test" class="section level2">
 <h2>statistical test</h2>
@@ -2080,6 +2506,43 @@ genotypehom:treatment100 µg Fe-citrate
   scale_colour_viridis_d(end = 0.75) +
   scale_fill_viridis_d(end = 0.75)</code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-17-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
+Past versions of unnamed-chunk-17-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-17-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-17-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Looking at the changes to the total number of turns across the bins within genoytpes. The overall distibution looks simialr in each mutants, with the activity decreasing as time goes on.</p>
 <pre class="r"><code>final_data_long %&gt;%
   dplyr::distinct(rel_alts, .keep_all = T) %&gt;%
@@ -2107,6 +2570,43 @@ genotypehom:treatment100 µg Fe-citrate
   scale_colour_viridis_d(end = 0.75) +
   scale_fill_viridis_d(end = 0.75)</code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-18-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-18-1">
+Past versions of unnamed-chunk-18-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-18-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-18-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Finally, want to vis within treatments</p>
 <pre class="r"><code>final_data_long %&gt;%
   dplyr::distinct(rel_alts, .keep_all = T) %&gt;%
@@ -2134,6 +2634,43 @@ genotypehom:treatment100 µg Fe-citrate
   scale_colour_viridis_d(end = 0.75) +
   scale_fill_viridis_d(end = 0.75)</code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-19-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-19-1">
+Past versions of unnamed-chunk-19-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-19-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-19-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="statistical-test-1" class="section level2">
 <h2>statistical test</h2>
@@ -2155,14 +2692,13 @@ genotypehom:treatment100 µg Fe-citrate
   .$coef %&gt;%
   as.data.frame() %&gt;% 
   dplyr::rename(pval = &quot;Pr(&gt;|z|)&quot;) %&gt;% 
-  kable(caption = &quot;Negative binomial GLM model coefficients.\n
-      None of the factors have a significant effect on the total number of turns&quot; ) %&gt;%
+  kable(caption = &quot;Negative binomial GLM model coefficients&quot;) %&gt;%
   kable_styling() %&gt;% 
   row_spec(row = c(10,11), background = &quot;#ccffef&quot;)</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
-<p>Negative binomial GLM model coefficients.</p>
-<pre><code>  None of the factors have a significant effect on the total number of turns&lt;/caption&gt;</code></pre>
+Negative binomial GLM model coefficients
+</caption>
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -2371,6 +2907,7 @@ genotypehom:treatment100 µg Fe-citrate
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>#I&#39;m not sure whther this model is right at this stage. The genotype x treatment x bin model would not run. </code></pre>
 </div>
 </div>
 <div id="time-spent-in-each-zone-of-the-y-maze" class="section level1">
@@ -2400,6 +2937,43 @@ genotypehom:treatment100 µg Fe-citrate
   labs(y = &quot;Total time spent in each zone (mins, log scale)&quot;, 
        title = &quot;Total time spent in each zone&quot;)</code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-21-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-1">
+Past versions of unnamed-chunk-21-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-21-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-21-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>I was curious to see whether which maze the fish were in (i.e. top left, middle etc) would have an effect on whether they spend more or less time in one of the arms of the mazes. There are 8 ymazes in each zantiks unit. inspection of the total time spent in each zone of the maze across the 8 possible positions in the zantiks unit didnt reveal any trends.</p>
 <p>There might have been something in position 6, zone 4. But this is only 2 data points and so not really reliable</p>
 <pre class="r"><code>read_csv(&quot;data/ymaze/processed_data/fecit/time_in_zone.csv&quot;) %&gt;%
@@ -2428,6 +3002,43 @@ genotypehom:treatment100 µg Fe-citrate
        title = &quot;Total time spent in each zone&quot;, 
        subtitle = &quot;accoring to position in the ymaze&quot;)</code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-22-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-22-1">
+Past versions of unnamed-chunk-22-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-22-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-22-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>I alslo wanted to look at the average time spent in each zone.</p>
 <pre class="r"><code>read_csv(&quot;data/ymaze/processed_data/fecit/time_in_zone.csv&quot;) %&gt;%
   mutate(fish_id = as.character(fish_id)) %&gt;%
@@ -2452,6 +3063,43 @@ genotypehom:treatment100 µg Fe-citrate
   labs(y = &quot;Average time spent in each zone (mins, log scale)&quot;, 
        title = &quot;Average time spent in each zone&quot;)</code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-23-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-23-1">
+Past versions of unnamed-chunk-23-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-23-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-23-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="statistical-test-2" class="section level2">
 <h2>Statistical test</h2>
 <p>Here, I fit the average time spent in each zone of the maze to a linear mixed effect model. The <code>genotype x treatmetn x zone</code> effect is not significant, meaning there is not difference between the mutants and treatment groups.</p>
@@ -2658,6 +3306,43 @@ final_data %&gt;%
         aspect.ratio = 1)
 )</code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-26-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-26-1">
+Past versions of unnamed-chunk-26-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-26-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-26-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="test-for-changes-to-alternation" class="section level1">
 <h1>test for changes to alternation</h1>
@@ -2892,6 +3577,43 @@ Results are averaged over the levels of: L_R_bias
 Confidence level used: 0.95 
 Intervals are back-transformed from the logit scale </code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-28-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-28-1">
+Past versions of unnamed-chunk-28-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-28-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-28-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="l-or-r-bias" class="section level3">
 <h3>L or R bias</h3>
@@ -2928,6 +3650,43 @@ Results are averaged over the levels of: bin, genotype, treatment
 Confidence level used: 0.95 
 Intervals are back-transformed from the logit scale </code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-29-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-29-1">
+Past versions of unnamed-chunk-29-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-29-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-29-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -3160,6 +3919,43 @@ Results are averaged over the levels of: L_R_bias
 Confidence level used: 0.95 
 Intervals are back-transformed from the logit scale </code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-31-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-31-1">
+Past versions of unnamed-chunk-31-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-31-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-31-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="l-or-r-bias-1" class="section level2">
 <h2>L or R bias</h2>
@@ -3196,10 +3992,48 @@ Results are averaged over the levels of: bin, genotype, treatment
 Confidence level used: 0.95 
 Intervals are back-transformed from the logit scale </code></pre>
 <p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-32-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-32-1">
+Past versions of unnamed-chunk-32-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-32-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/4656d3a662d2c45902057a71b5861843284092c1/docs/figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-32-1.png" target="_blank">4656d3a</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-11-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="conclusion" class="section level1">
 <h1>Conclusion</h1>
+<p>At this stage, it is difficult to say whether the the treatment of ferric citrate is having any benefit on 6 month old naglu homozygous zebrafish.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -3258,14 +4092,14 @@ loaded via a namespace (and not attached):
 [67] cowplot_1.1.1       tidyselect_1.1.1    plyr_1.8.6         
 [70] R6_2.5.0            generics_0.1.0      multcomp_1.4-17    
 [73] DBI_1.1.1           pillar_1.6.1        haven_2.4.1        
-[76] foreign_0.8-81      withr_2.4.2         survival_3.2-11    
-[79] abind_1.4-5         modelr_0.1.8        crayon_1.4.1       
-[82] utf8_1.2.1          rmarkdown_2.9       grid_4.0.2         
-[85] data.table_1.14.0   git2r_0.28.0        reprex_2.0.0       
-[88] digest_0.6.27       webshot_0.5.2       xtable_1.8-4       
-[91] numDeriv_2016.8-1.1 httpuv_1.6.1        munsell_0.5.0      
-[94] beeswarm_0.4.0      viridisLite_0.4.0   vipor_0.4.5        
-[97] bslib_0.2.5.1      </code></pre>
+[76] whisker_0.4         foreign_0.8-81      withr_2.4.2        
+[79] survival_3.2-11     abind_1.4-5         modelr_0.1.8       
+[82] crayon_1.4.1        utf8_1.2.1          rmarkdown_2.9      
+[85] grid_4.0.2          data.table_1.14.0   git2r_0.28.0       
+[88] reprex_2.0.0        digest_0.6.27       webshot_0.5.2      
+[91] xtable_1.8-4        numDeriv_2016.8-1.1 httpuv_1.6.1       
+[94] munsell_0.5.0       beeswarm_0.4.0      viridisLite_0.4.0  
+[97] vipor_0.4.5         bslib_0.2.5.1      </code></pre>
 </div>
 </div>
 
