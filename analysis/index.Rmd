@@ -8,19 +8,31 @@ editor_options:
   chunk_output_type: console
 ---
 
-put some general grant info here. 
+Mucopolysaccharidosis type III (MPS-III: Sanfilippo syndrome) is caused by a deficiency of one of four genes encoding enzymes involved in the degradation of the complex sugar molecule heparan sulfate in lysosomes (the “stomachs” of cells, where molecules are degraded into the building blocks for use). Deficiency of these enzymes results in progressive build-up of heparan sulfate in lysosomes, impairing their normal function of degrading and recycling molecules. While replacement of the defective enzyme in MPS-III is showing promise as a therapeutic strategy, not all children can access this treatment. Therefore, alternative therapies are required.  
 
+One important function of lysosomes is to release iron for use in the cell. When lysosomes do not function properly, not enough iron can converted to its active form for use by the cell. This is really problematic, as iron plays a vital role in how cells produce energy. Recently, it has been shown that iron supplementation can overcome and restore the problems of dysfunctional lysosomes. Could this be a new therapeutic strategy for MPS-III?
+
+Before we start supplementing iron to human children with MPS-III, we must understand whether it will be beneficial. To begin collecting this critical information, we will test whether the supplementation of iron is beneficial to our animal models of this disease. Our animal model is a small freshwater fish called zebrafish, which is a very useful alternative to mammalian models. Here, we will test two different iron-supplements already approved for use in humans. We performed intraperitoneal injection of these iron types into zebrafish and harvested their brains. 
+
+To first determine whether we are getting an iron-related response, we are performing qPCRs on some of the iron-transport genes: fth1a, tfr1a and tfr1b. To get an idea of whether it is therapeutic, we are testing expression of a couple of inflammatory genes: irf7. Additionally, we are performing a pilot behavioural analysis to assess whether we can see any behavioural differences. 
+
+These experiments will support whether iron supplementation is a valid therapeutic strategy for MPS-III, and subsequently will provide the first steps towards establishing this as a new treatment for MPS-III. 
 
 # qPCRs:
 
-## Iron-dextran treament
+### Iron-dextran treament
 
-* [ferritin heavy polypeptide 1a (fth1a))](FeDex_fth1a.html)
+* [ferritin heavy polypeptide 1a (fth1a)](FeDex_fth1a.html)
 * [transferrin receptor 1a (tfr1a)](FeDex_tfr1a.html)
 * [transferrin receptor 1b (tfr1b)](FeDex_tfr1b.html)
 * [transferrin receptor 1b (tfr1b)](FeDex_tfr1b.html)
 * [ferritin heavy polypeptide 1a (fth1a) using 384-well plate)](FeDex_fth1a_384well.html)
-* [interferon regulatory factor 7(irf7))](FeDex_irf7.html)
+* [interferon regulatory factor 7(irf7)](FeDex_irf7.html)
+
+### Ferric citrate treatment
+
+# behaviour analysis
+
+* [ferric citrate y-maze pilot](FeCit_Ymaze_pilot.html)
 
 
-## Ferric citrate treatment

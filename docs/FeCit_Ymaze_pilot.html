@@ -1,0 +1,3366 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Karissa Barthelson" />
+
+<meta name="date" content="2022-10-31" />
+
+<title>FeCit_Ymaze_pilot</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">2022_MPSII_qPCR_ironSupplementation</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="FeDex_fth1a.html">FeDex_fth1a</a>
+</li>
+<li>
+  <a href="FeDex_tfr1a.html">FeDex_tfr1a</a>
+</li>
+<li>
+  <a href="FeDex_fth1b.html">FeDex_fth1b</a>
+</li>
+<li>
+  <a href="FeDex_irf7.html">FeDex_irf7</a>
+</li>
+<li>
+  <a href="FeDex_fth1a_384well.html">FeDex_fth1a_384well</a>
+</li>
+<li>
+  <a href="FeCit_Ymaze.html">FeCit_Ymaze_pilot</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">FeCit_Ymaze_pilot</h1>
+<h4 class="author">Karissa Barthelson</h4>
+<h4 class="date">2022-10-31</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-11-01
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>2022_MPSII_qPCR_ironSupplementation/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20221025code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20221025)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20221025code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20221025)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkarissab2022MPSsocietyironSupplementaiontreeb7abc796e7d02a7a4be253dd84d2505e43024ec7targetblankb7abc79a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/tree/b7abc796e7d02a7a4be253dd84d2505e43024ec7" target="_blank">b7abc79</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkarissab2022MPSsocietyironSupplementaiontreeb7abc796e7d02a7a4be253dd84d2505e43024ec7targetblankb7abc79a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/tree/b7abc796e7d02a7a4be253dd84d2505e43024ec7" target="_blank">b7abc79</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    data/.DS_Store
+
+Untracked files:
+    Untracked:  analysis/FeCit_Ymaze_pilot.Rmd
+    Untracked:  code/FeCit-ymaze-rawDataProcessing.R
+    Untracked:  data/2022Oct19 ip injection FeCitrate naglu hom x het 6m meta.xlsx
+    Untracked:  data/ymaze/
+
+Unstaged changes:
+    Modified:   analysis/_site.yml
+    Modified:   analysis/index.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>library(tidyverse)
+library(readxl)
+library(here)
+library(magrittr)
+library(scales)
+library(readxl)
+library(ggpubr)
+library(ggeasy)
+library(ggfortify)
+library(ggbeeswarm)
+library(ggforce)
+library(ggrepel)
+library(kableExtra)
+
+# stat analysis
+library(broom)
+library(lme4)
+library(performance)
+library(car)
+library(emmeans)
+library(glmmTMB)
+library(MASS)
+
+# set the default theme for ggplot as theme_bw
+theme_set(theme_bw())</code></pre>
+<pre class="r"><code># read in the processed data and metadata
+meta &lt;- read_xlsx(&quot;data/2022Oct19 ip injection FeCitrate naglu hom x het 6m meta.xlsx&quot;) %&gt;% 
+  mutate(fish_id = as.character(fish_id), 
+         treatment = factor(treatment, 
+                            levels = c(&quot;0.85% saline&quot;, 
+                                       &quot;10 µg Fe-citrate&quot;, 
+                                       &quot;100 µg Fe-citrate&quot;))
+  )
+
+final_data &lt;- read_csv(&quot;data/ymaze/processed_data/fecit/final_output.csv&quot;) %&gt;% 
+  dplyr::select(-1) %&gt;% 
+  mutate(fish_id = factor(fish_id)) %&gt;% 
+  left_join(meta) %&gt;% 
+  dplyr::filter(genotype%in% c(&quot;het&quot;, &quot;hom&quot;))
+#view(final_data)
+
+# make an object which converts the final data to long format. for easier plotting in ggplot
+final_data_long &lt;- final_data %&gt;%
+  gather(key = &quot;tetras&quot;, value = &quot;Count&quot;, # convert to long format
+         grep(&quot;[L|R]{4}&quot;, 
+              colnames(.))
+         )
+
+# also make an object which sums the tetragrams over the hour
+final_data_summedoverbins &lt;- final_data %&gt;%
+  gather(key = &quot;tetras&quot;, value = &quot;Count&quot;, # convert to long format
+         grep(&quot;[L|R]{4}&quot;, # select the columns which contain a L or a R four times
+              colnames(.))
+         ) %&gt;% 
+  group_by(fish_id, tetras) %&gt;% 
+  mutate(x = sum(Count)) %&gt;% # sum the tetragram counts per fish_id
+  dplyr::select(colnames(meta), tetras, x) %&gt;% 
+  unique</code></pre>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>In this analysis, I will analyse behavioural data generated for zebrafish arising from a lay from <em>naglu</em> A603fs hom x het after treatment of different amounts of ferric citrate in the Zantiks LT Y-maze.</p>
+<p>Note that these fish were tested while construction was occuring on the floor below us. There was often loud noises occuring.</p>
+<p>Fish were isolated for 45 mins, then placed in the mazes alone for 1 hour. Raw data was collected, and metadata was recorded (i.e. sex, time, etc). These raw data spreadsheets were batch processed in the BatchProcess R script in the <code>code</code> folder to produce the <code>final_data</code> object. This object contains the tetragram frequencies (see below). Note that fish were genotyped after data collection so that we are blinded from any observer bias until after raw data collection. Additionally, the videos were manually observed to ensure proper tracking. Any fish where the tracking was not perfect was omitted.</p>
+<pre class="r"><code> read_csv(&quot;data/ymaze/raw_data/fecit/ymaze_inLT-20221027T103409.csv&quot;, skip =4, col_names = F) %&gt;% 
+  head %&gt;% 
+  dplyr::select(-X2, -X3) %&gt;% 
+  set_colnames(c(&quot;Time&quot;, &quot;fish&quot;,&#39;enter or exit&#39;, &quot;zone&quot;)) %&gt;% 
+  kable(caption = &quot;example of raw data&quot;) %&gt;% 
+  kable_styling(full_width = F)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+example of raw data
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Time
+</th>
+<th style="text-align:right;">
+fish
+</th>
+<th style="text-align:left;">
+enter or exit
+</th>
+<th style="text-align:right;">
+zone
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+30.817
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Enter_Zone
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30.817
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Enter_Zone
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30.817
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+Enter_Zone
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30.817
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Enter_Zone
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30.817
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Enter_Zone
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30.817
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+Enter_Zone
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>final_data %&gt;% 
+  head %&gt;% 
+  kable(caption = &quot;Example of the processed data&quot;) %&gt;% 
+  kable_styling() </code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Example of the processed data
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+fish_id
+</th>
+<th style="text-align:right;">
+bin
+</th>
+<th style="text-align:right;">
+LLLL
+</th>
+<th style="text-align:right;">
+LLLR
+</th>
+<th style="text-align:right;">
+LLRL
+</th>
+<th style="text-align:right;">
+LLRR
+</th>
+<th style="text-align:right;">
+LRLL
+</th>
+<th style="text-align:right;">
+LRLR
+</th>
+<th style="text-align:right;">
+LRRL
+</th>
+<th style="text-align:right;">
+LRRR
+</th>
+<th style="text-align:right;">
+RLLL
+</th>
+<th style="text-align:right;">
+RLLR
+</th>
+<th style="text-align:right;">
+RLRL
+</th>
+<th style="text-align:right;">
+RLRR
+</th>
+<th style="text-align:right;">
+RRLL
+</th>
+<th style="text-align:right;">
+RRLR
+</th>
+<th style="text-align:right;">
+RRRL
+</th>
+<th style="text-align:right;">
+RRRR
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+R
+</th>
+<th style="text-align:right;">
+total_turns
+</th>
+<th style="text-align:right;">
+reps
+</th>
+<th style="text-align:right;">
+alts
+</th>
+<th style="text-align:right;">
+rel_reps
+</th>
+<th style="text-align:right;">
+rel_alts
+</th>
+<th style="text-align:right;">
+rel_R
+</th>
+<th style="text-align:right;">
+rel_L
+</th>
+<th style="text-align:right;">
+tank
+</th>
+<th style="text-align:left;">
+treatment
+</th>
+<th style="text-align:left;">
+sex
+</th>
+<th style="text-align:left;">
+Note
+</th>
+<th style="text-align:left;">
+Note2
+</th>
+<th style="text-align:left;">
+dpi
+</th>
+<th style="text-align:left;">
+genotype
+</th>
+<th style="text-align:right;">
+ymazeUni
+</th>
+<th style="text-align:left;">
+start time
+</th>
+<th style="text-align:right;">
+YmazePosition
+</th>
+<th style="text-align:right;">
+VideosEndIn
+</th>
+<th style="text-align:left;">
+…13
+</th>
+<th style="text-align:left;">
+…14
+</th>
+<th style="text-align:left;">
+…15
+</th>
+<th style="text-align:left;">
+…16
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+127
+</td>
+<td style="text-align:right;">
+156
+</td>
+<td style="text-align:right;">
+283
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+138
+</td>
+<td style="text-align:right;">
+6.007067
+</td>
+<td style="text-align:right;">
+48.763251
+</td>
+<td style="text-align:right;">
+55.12367
+</td>
+<td style="text-align:right;">
+44.87633
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+0.85% saline
+</td>
+<td style="text-align:left;">
+m
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+het
+</td>
+<td style="text-align:right;">
+139
+</td>
+<td style="text-align:left;">
+1034am
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+103440
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+31
+</td>
+<td style="text-align:right;">
+8.148148
+</td>
+<td style="text-align:right;">
+22.962963
+</td>
+<td style="text-align:right;">
+51.11111
+</td>
+<td style="text-align:right;">
+48.88889
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+0.85% saline
+</td>
+<td style="text-align:left;">
+m
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+het
+</td>
+<td style="text-align:right;">
+139
+</td>
+<td style="text-align:left;">
+1034am
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+103440
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+44
+</td>
+<td style="text-align:right;">
+53
+</td>
+<td style="text-align:right;">
+97
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+8.247423
+</td>
+<td style="text-align:right;">
+15.463918
+</td>
+<td style="text-align:right;">
+54.63918
+</td>
+<td style="text-align:right;">
+45.36082
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+0.85% saline
+</td>
+<td style="text-align:left;">
+m
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+het
+</td>
+<td style="text-align:right;">
+139
+</td>
+<td style="text-align:left;">
+1034am
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+103440
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+9.803922
+</td>
+<td style="text-align:right;">
+13.725490
+</td>
+<td style="text-align:right;">
+58.82353
+</td>
+<td style="text-align:right;">
+41.17647
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+0.85% saline
+</td>
+<td style="text-align:left;">
+m
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+het
+</td>
+<td style="text-align:right;">
+139
+</td>
+<td style="text-align:left;">
+1034am
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+103440
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+4.761905
+</td>
+<td style="text-align:right;">
+52.38095
+</td>
+<td style="text-align:right;">
+47.61905
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+0.85% saline
+</td>
+<td style="text-align:left;">
+m
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+het
+</td>
+<td style="text-align:right;">
+139
+</td>
+<td style="text-align:left;">
+1034am
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+103440
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5.882353
+</td>
+<td style="text-align:right;">
+11.764706
+</td>
+<td style="text-align:right;">
+58.82353
+</td>
+<td style="text-align:right;">
+41.17647
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+0.85% saline
+</td>
+<td style="text-align:left;">
+m
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+het
+</td>
+<td style="text-align:right;">
+139
+</td>
+<td style="text-align:left;">
+1034am
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+103440
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># define fish which had the tracking issues
+fish2omit &lt;- final_data_summedoverbins %&gt;% 
+  dplyr::filter(x &gt; 200) %&gt;% 
+  .$fish_id %&gt;% 
+  unique
+
+# remove them
+final_data %&lt;&gt;%
+  dplyr::filter(!(fish_id %in%fish2omit))
+
+final_data_long%&lt;&gt;%
+  dplyr::filter(!(fish_id %in% fish2omit))
+
+final_data_summedoverbins%&lt;&gt;%
+  dplyr::filter(!(fish_id %in% fish2omit))</code></pre>
+</div>
+<div id="check-proportions-of-fish" class="section level1">
+<h1>check proportions of fish</h1>
+<p>After omitting the fish with tracking issues, only 3 het fish treated with 0.85% saline remain. This is not great for the stats, but this is only a pilot overall.</p>
+<pre class="r"><code>final_data %&gt;% 
+  dplyr::select(colnames(meta)) %&gt;% 
+  dplyr::distinct() %&gt;% 
+  group_by(genotype, sex, treatment, dpi) %&gt;% 
+  mutate(n = n()) %&gt;% 
+  ggplot(aes(x = genotype)) +
+  geom_bar(aes(fill = treatment), 
+           position = &quot;dodge&quot;, 
+           colour = &quot;black&quot;) +
+  facet_wrap(~dpi, nrow = 1) +
+  scale_fill_viridis_d() + 
+  scale_y_continuous(breaks = seq(1:9)) +
+  theme(legend.position = &quot;bottom&quot;
+        )+
+  labs(title = &quot;Number of fish per genotype, sex, treatment and dpi in the qPCR analysis&quot;,
+       y = &quot;Number of fish&quot;, 
+       x = &quot;&quot;)</code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-6-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="visualisation-of-raw-data" class="section level1">
+<h1>Visualisation of raw data</h1>
+<p>Cleal et al. showed that zebrafish naturally perform more of the alternation tetragrams (LRLR and RLRL) in a Y-maze. We also see thgis somewhat here.</p>
+<pre class="r"><code>final_data_summedoverbins %&gt;%
+  dplyr::distinct(x, .keep_all = T) %&gt;%
+  ggplot(aes(x = tetras, y = x)) +
+  geom_jitter(aes(colour = tetras,
+                  shape = sex)) +
+  geom_boxplot(outlier.shape = NA,
+               # aes(fill = Genotype)
+               fill = NA
+               ) +
+  scale_fill_viridis_d() +
+  labs(y = &quot;Number of tetragrams&quot;,
+       colour = &quot;Tetragram&quot;,
+       x = &quot;Tetragram&quot;)+
+  theme(legend.position = &quot;bottom&quot;)  +
+  ggtitle(&quot;Total number of 16 possible tetragrams performed by zebrafish in a Y-maze\nduring a 1 hour search period&quot;) </code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-7-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>We can also overlay the genotype boxplots as shown below. Looks like the heterozyous and homozygous fish perform more alternations than the WT fish. I will look into this more later in the analysis</p>
+<pre class="r"><code>final_data_summedoverbins %&gt;%
+  dplyr::distinct(x, .keep_all = T) %&gt;%
+  ggplot(aes(x = tetras, y = x)) +
+  geom_jitter(aes(colour = tetras,
+                  shape = sex)) +
+  geom_boxplot(outlier.shape = NA,
+               aes(fill = genotype),
+               alpha = 0.5,
+               ) +
+  scale_fill_viridis_d() +
+  labs(y = &quot;Number of tetragrams&quot;,
+       colour = &quot;Tetragram&quot;,
+       x = &quot;Tetragram&quot;)+
+  theme(legend.position = &quot;bottom&quot;)  +
+  facet_wrap(~treatment, ncol = 1) +
+  easy_rotate_x_labels(angle = -45) +
+  annotate(&quot;rect&quot;, # add some boxes aeround the alts 
+           xmin = 5.5, xmax = 6.5, 
+           ymin = -1, ymax = 200, 
+             alpha = 0, color= &quot;red&quot;) +
+  annotate(&quot;rect&quot;, 
+           xmin = 10.5, xmax = 11.5, 
+           ymin = -1, ymax = 200,
+           alpha = 0, color= &quot;red&quot;) +
+  ggtitle(&quot;Total number of 16 possible tetragrams performed by zebrafish in a Y-maze\nduring a 1 hour search period&quot;) </code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-8-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>The alternation tetragrams are the tetragram of interest (the measure of working memory). Below indicates the number of tetragrams performed by zerbafish across the 6 x 10 min blocks of the hour they spent in the maze.</p>
+<pre class="r"><code>final_data_long %&gt;%
+  dplyr::distinct(rel_alts, .keep_all = T) %&gt;%
+  mutate(binforvis = case_when(
+    bin == 1 ~ &quot;0-10 mins&quot;, 
+    bin == 2 ~ &quot;10-20 mins&quot;, 
+    bin == 3 ~ &quot;20-30 mins&quot;, 
+    bin == 4 ~ &quot;30-40 mins&quot;, 
+    bin == 5 ~ &quot;40-50 mins&quot;, 
+    bin == 6 ~ &quot;50-60 mins&quot;
+    )) %&gt;% 
+  ggplot(aes(x = treatment, y = alts)) +
+  geom_boxplot(outlier.shape = NA,
+               aes(fill = genotype), 
+               alpha = 0.5) +
+  geom_point(aes(colour = genotype), 
+             position = position_jitterdodge()) +
+  facet_wrap(~binforvis, nrow = 1) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1), 
+        legend.position = &quot;bottom&quot;) +
+  ylab(&quot;Frequency of alternation tetragrams (LRLR + RLRL)&quot;) +
+  scale_colour_viridis_d(end = 0.75) +
+  scale_fill_viridis_d(end = 0.75) </code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-9-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>   # geom_label_repel(aes(label = fish_id),
+   #                 data = . %&gt;%
+   #                   dplyr::filter(fish_id == 1))</code></pre>
+<p>We can also display this as the <em>relative</em> amount of alternation tetragrams performed by zebrafish in a 1 hour search period. This will control for how active each fish is. Again, fish 18 and 24 looks like outliers.</p>
+<pre class="r"><code>final_data_long %&gt;%
+  dplyr::distinct(rel_alts, .keep_all = T) %&gt;%
+  mutate(binforvis = case_when(
+    bin == 1 ~ &quot;0-10 mins&quot;, 
+    bin == 2 ~ &quot;10-20 mins&quot;, 
+    bin == 3 ~ &quot;20-30 mins&quot;, 
+    bin == 4 ~ &quot;30-40 mins&quot;, 
+    bin == 5 ~ &quot;40-50 mins&quot;, 
+    bin == 6 ~ &quot;50-60 mins&quot;
+    )) %&gt;% 
+  ggplot(aes(x = treatment, y = rel_alts)) +
+  geom_boxplot(outlier.shape = NA,
+               aes(fill = genotype), 
+               alpha = 0.5) +
+  geom_point(aes(colour = genotype), 
+             position = position_jitterdodge()) +
+  facet_wrap(~binforvis, nrow = 1) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1), 
+        legend.position = &quot;bottom&quot;) +
+  ylab(&quot;Relative number of alternation tetragrams\n(LRLR + RLRL) / total_turns&quot;) +
+  scale_colour_viridis_d(end = 0.75) +
+  scale_fill_viridis_d(end = 0.75) </code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-10-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="locomotor-defect" class="section level1">
+<h1>Locomotor defect</h1>
+<p>Alteration to locomotor activity could be a confounding effect with genotype to alternation (LRLR + RLRL) frequency. If mutant and/or treated fish had some form of locomotor change, they could be performing more or less alternation tetragrams not due to impairment of spatial working memory. To account for this, I will test whether the genotype and/or treatment of the fish had a significant effect on:</p>
+<ul>
+<li><ol style="list-style-type: decimal">
+<li>the total number of turns the fish performed in the hour spent in the maze or</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: decimal">
+<li>the average time spent in each zone of the maze.</li>
+</ol></li>
+</ul>
+<div id="total-number-of-turns" class="section level2">
+<h2>total number of turns</h2>
+<p>I first visualised the total number of turns . Some differences are obsevred between the hets and the homs. Particularly in the 100 µg Fe-citrate treatment group.</p>
+<pre class="r"><code>final_data_summedoverbins %&gt;%
+  ungroup() %&gt;%
+  group_by(fish_id) %&gt;%
+  mutate(total_turns = sum(x)) %&gt;%
+  dplyr::select(colnames(meta), total_turns) %&gt;%
+  unique %&gt;%
+  ggplot(aes(x = genotype,y = total_turns)) +
+  geom_violin(aes(fill = genotype),
+               alpha = 0.5) +
+  geom_boxplot(aes(colour = genotype),
+               fill = NA,
+               width = 0.25,
+               colour= &quot;black&quot;) +
+  geom_quasirandom(aes(shape = sex), 
+                   size = 2) +
+  scale_fill_viridis_d(option = &quot;viridis&quot;) +
+  scale_colour_viridis_d(option = &quot;viridis&quot;) +
+  facet_wrap(~treatment) +
+  labs(y = &quot;Total number of turns&quot;, 
+       title = &quot;Total number of turns performed by fish in the Y-maze in 1 hour&quot;, 
+       subtitle = &quot;According to treatment&quot;)</code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-11-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>The plot below is grouped by genotype rather than treartment. Not much difference between treatment groups within genotypes.</p>
+<pre class="r"><code>final_data_summedoverbins %&gt;%
+  ungroup() %&gt;%
+  group_by(fish_id) %&gt;%
+  mutate(total_turns = sum(x)) %&gt;%
+  dplyr::select(colnames(meta), total_turns) %&gt;%
+  unique %&gt;%
+  ggplot(aes(x = treatment,y = total_turns)) +
+  geom_violin(aes(fill = genotype),
+               alpha = 0.5) +
+  geom_boxplot(aes(colour = genotype),
+               fill = NA,
+               width = 0.25,
+               colour= &quot;black&quot;) +
+  geom_quasirandom(aes(shape = sex), 
+                   size = 2) +
+  scale_fill_viridis_d(option = &quot;viridis&quot;) +
+  scale_colour_viridis_d(option = &quot;viridis&quot;) +
+  facet_wrap(~genotype) +
+  labs(y = &quot;Total number of turns&quot;, 
+       title = &quot;Total number of turns performed by fish in the Y-maze in 1 hour&quot;, 
+       subtitle = &quot;According to treatment&quot;)</code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-12-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>I also want to look at whether there is a batch effect of test. There were a total of 6 tests (start times indicated in the plot) performed in one of two zantiks units (139 and 146). Each test contained 8 fish which were randomly assigned. A bit of fvariation is observed between start times, but this would be expected considering they are performed throughoutthe day, and have had sligtly different environmental conditions (e.g. ,vibrations from the construction, people talking out in the hall etc), as well as circadian differences.</p>
+<pre class="r"><code>final_data_summedoverbins %&gt;%
+  ungroup() %&gt;%
+  group_by(fish_id) %&gt;%
+  mutate(total_turns = sum(x)) %&gt;%
+  dplyr::select(colnames(meta), total_turns) %&gt;%
+  unique %&gt;%
+  mutate(`start time` = factor(`start time`, levels = c(
+    &quot;1034am&quot;, 
+    &quot;1048am&quot;,
+    &quot;1152am&quot;,
+    &quot;1156am&quot;,
+    &quot;105pm&quot;,
+    &quot;110pm&quot;
+  ))
+  ) %&gt;% 
+  ggplot(aes(x = `start time`, y = total_turns)) +
+  geom_boxplot(aes(fill = `start time`),
+               outlier.shape = NA,
+               width = 0.25,
+               alpha = 0.5,
+               colour= &quot;black&quot;) +
+  geom_jitter(aes(colour = `start time`),
+              size = 3) +
+  labs(y = &quot;Total number of turns&quot;, 
+       title = &quot;Total number of turns performed by fish in the Y-maze in 1 hour&quot;, 
+       subtitle = &quot;According to start time of day of the test&quot;)</code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-13-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>I also had a look at whether the genotype and treatment groups could explain some of the apparent variation within tests. This does seem to be the case as observed in the fig below. the genotypes can sometimes show differences.</p>
+<pre class="r"><code>final_data_summedoverbins %&gt;%
+  ungroup() %&gt;%
+  group_by(fish_id) %&gt;%
+  mutate(total_turns = sum(x),
+         `start time` = factor(`start time`, levels = c(
+           &quot;1034am&quot;, 
+           &quot;1048am&quot;,
+           &quot;1152am&quot;,
+           &quot;1156am&quot;,
+           &quot;105pm&quot;,
+           &quot;110pm&quot;
+         ))) %&gt;%
+  dplyr::select(colnames(meta), total_turns) %&gt;%
+  unique %&gt;%
+  ggplot(aes(x = genotype, y = total_turns)) +
+  geom_violin(aes(fill = genotype),
+               alpha = 0.5) +
+  geom_boxplot(aes(colour = genotype),
+               fill = NA,
+               width = 0.25,
+               colour= &quot;black&quot;) +
+  geom_jitter(aes(shape = treatment), 
+                   size = 3) +
+  scale_fill_viridis_d(option = &quot;viridis&quot;) +
+  scale_colour_viridis_d(option = &quot;viridis&quot;) +
+  facet_wrap(~ymazeUni+`start time`) +
+  labs(y = &quot;Total number of turns&quot;, 
+       title = &quot;Total number of turns performed by fish in the Y-maze in 1 hour&quot;, 
+       subtitle = &quot;According to start time of day of the test&quot;)</code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-14-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>Trying to determine whether the effect of treatment group and start time is more difficult to say, as there is often &lt; 2 fish per treatment group within a particular test. This is just due to the nature of performing this pilot experiment and will not be such as issue next time (when we only have 2 treatment groups, saline and iron)</p>
+<pre class="r"><code>final_data_summedoverbins %&gt;%
+  ungroup() %&gt;%
+  group_by(fish_id) %&gt;%
+  mutate(total_turns = sum(x)) %&gt;%
+  dplyr::select(colnames(meta), total_turns) %&gt;%
+  unique %&gt;%
+  ggplot(aes(x = treatment, y = total_turns)) +
+  geom_violin(aes(fill = treatment),
+               alpha = 0.5) +
+  geom_boxplot(aes(colour = treatment),
+               fill = NA,
+               width = 0.25,
+               colour= &quot;black&quot;) +
+  geom_jitter(aes(shape = genotype), 
+                   size = 3) +
+  scale_fill_viridis_d(option = &quot;viridis&quot;) +
+  scale_colour_viridis_d(option = &quot;viridis&quot;) +
+  facet_wrap(~ymazeUni+`start time`) +
+  easy_rotate_x_labels(angle = -45) +
+  labs(y = &quot;Total number of turns&quot;, 
+       title = &quot;Total number of turns performed by fish in the Y-maze in 1 hour&quot;, 
+       subtitle = &quot;According to start time of day of the test&quot;)</code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-15-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="statistical-test" class="section level2">
+<h2>statistical test</h2>
+<p>To test whether the genotype and/or treatment have a significant effect overall on the total number of turns, I fitted the summed over bins data to a negative binomial generalised linear mixed effect model (negative binomial). No statistical evidence is observed here. The closest is the treatment 100 µg Fe-citrate group, which makes sense considering the plots above show the most difference. Since the start time of the test doesnt have a logical pattern (i.e. more active in morning), I’ve included it in the model as a random effect.</p>
+<pre class="r"><code>final_data_summedoverbins %&gt;%
+  ungroup() %&gt;%
+  group_by(fish_id) %&gt;%
+  mutate(total_turns = sum(x)) %&gt;%
+  dplyr::select(colnames(meta), total_turns) %&gt;%
+  unique %&gt;%
+  glmer.nb(total_turns ~ genotype*treatment + (1|`start time`),
+         data = .) %&gt;%
+  summary %&gt;%
+  .$coef %&gt;%
+  as.data.frame() %&gt;% 
+  dplyr::rename(pval = &quot;Pr(&gt;|z|)&quot;) %&gt;% 
+  kable(caption = &quot;Negative binomial GLM model coefficients.\n
+      None of the factors have a significant effect on the total number of turns&quot; ) %&gt;%
+  kable_styling() %&gt;% 
+  row_spec(row = c(5,6), background = &quot;#ccffef&quot;)</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<p>Negative binomial GLM model coefficients.</p>
+<pre><code>  None of the factors have a significant effect on the total number of turns&lt;/caption&gt;</code></pre>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Std. Error
+</th>
+<th style="text-align:right;">
+z value
+</th>
+<th style="text-align:right;">
+pval
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+6.0394614
+</td>
+<td style="text-align:right;">
+0.2088604
+</td>
+<td style="text-align:right;">
+28.9162572
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+genotypehom
+</td>
+<td style="text-align:right;">
+0.2279509
+</td>
+<td style="text-align:right;">
+0.2410592
+</td>
+<td style="text-align:right;">
+0.9456221
+</td>
+<td style="text-align:right;">
+0.3443413
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment10 µg Fe-citrate
+</td>
+<td style="text-align:right;">
+-0.0728026
+</td>
+<td style="text-align:right;">
+0.2642591
+</td>
+<td style="text-align:right;">
+-0.2754971
+</td>
+<td style="text-align:right;">
+0.7829344
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment100 µg Fe-citrate
+</td>
+<td style="text-align:right;">
+-0.2826648
+</td>
+<td style="text-align:right;">
+0.2560516
+</td>
+<td style="text-align:right;">
+-1.1039367
+</td>
+<td style="text-align:right;">
+0.2696206
+</td>
+</tr>
+<tr>
+<td style="text-align:left;background-color: #ccffef !important;">
+genotypehom:treatment10 µg Fe-citrate
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.0445503
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.3208640
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.1388450
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.8895727
+</td>
+</tr>
+<tr>
+<td style="text-align:left;background-color: #ccffef !important;">
+genotypehom:treatment100 µg Fe-citrate
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.3063598
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.3356062
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.9128550
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.3613188
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="turns-across-the-hour." class="section level2">
+<h2>turns across the hour.</h2>
+<p>I also want to look at whether the fish display changes to activity across the hour (i.e. are they more active when they are first placed in the maze?).</p>
+<pre class="r"><code>final_data_long %&gt;%
+  dplyr::distinct(rel_alts, .keep_all = T) %&gt;%
+  mutate(binforvis = case_when(
+    bin == 1 ~ &quot;0-10 mins&quot;, 
+    bin == 2 ~ &quot;10-20 mins&quot;, 
+    bin == 3 ~ &quot;20-30 mins&quot;, 
+    bin == 4 ~ &quot;30-40 mins&quot;, 
+    bin == 5 ~ &quot;40-50 mins&quot;, 
+    bin == 6 ~ &quot;50-60 mins&quot;
+    )) %&gt;% 
+  ggplot(aes(x = treatment, y = total_turns)) +
+  geom_boxplot(aes(fill = genotype),
+           position = &quot;dodge&quot;,
+           alpha = 0.5,
+           outlier.shape = NA) +
+   geom_point(aes(colour = genotype), 
+             position = position_jitterdodge()) +
+  facet_wrap(~binforvis, nrow = 1)+
+  theme(axis.text.x = element_text(angle = 45, 
+                                   hjust = 1, vjust = 1), 
+        legend.position = &quot;bottom&quot;) +
+  labs(title = &quot;Number of turns performed by zebrafish across an hour &quot;, 
+       subtitle = &quot;Accoring to treatment and genotype&quot;,
+       y = &quot;Number of turns&quot;) +
+  scale_colour_viridis_d(end = 0.75) +
+  scale_fill_viridis_d(end = 0.75)</code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-17-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>Looking at the changes to the total number of turns across the bins within genoytpes. The overall distibution looks simialr in each mutants, with the activity decreasing as time goes on.</p>
+<pre class="r"><code>final_data_long %&gt;%
+  dplyr::distinct(rel_alts, .keep_all = T) %&gt;%
+  mutate(binforvis = case_when(
+    bin == 1 ~ &quot;0-10 mins&quot;, 
+    bin == 2 ~ &quot;10-20 mins&quot;, 
+    bin == 3 ~ &quot;20-30 mins&quot;, 
+    bin == 4 ~ &quot;30-40 mins&quot;, 
+    bin == 5 ~ &quot;40-50 mins&quot;, 
+    bin == 6 ~ &quot;50-60 mins&quot;
+    )) %&gt;% 
+  ggplot(aes(x = binforvis, y = total_turns)) +
+  geom_boxplot(aes(fill = treatment),
+               position = &quot;dodge&quot;,
+               alpha = 0.5,
+               outlier.shape = NA) +
+  geom_point(aes(colour = treatment), 
+             position = position_jitterdodge()) +
+  facet_wrap(~genotype, nrow = 1, scales = &quot;free_x&quot;)+
+  theme(axis.text.x = element_text(angle = 45, 
+                                   hjust = 1, vjust = 1)) +
+  labs(title = &quot;Number of turns performed by zebrafish across an hour &quot;, 
+       subtitle = &quot;Accoring to treatment and genotype&quot;,
+       y = &quot;Number of turns&quot;) +
+  scale_colour_viridis_d(end = 0.75) +
+  scale_fill_viridis_d(end = 0.75)</code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-18-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>Finally, want to vis within treatments</p>
+<pre class="r"><code>final_data_long %&gt;%
+  dplyr::distinct(rel_alts, .keep_all = T) %&gt;%
+  mutate(binforvis = case_when(
+    bin == 1 ~ &quot;0-10 mins&quot;, 
+    bin == 2 ~ &quot;10-20 mins&quot;, 
+    bin == 3 ~ &quot;20-30 mins&quot;, 
+    bin == 4 ~ &quot;30-40 mins&quot;, 
+    bin == 5 ~ &quot;40-50 mins&quot;, 
+    bin == 6 ~ &quot;50-60 mins&quot;
+    )) %&gt;% 
+  ggplot(aes(x = binforvis, y = total_turns)) +
+  geom_boxplot(aes(fill = genotype),
+               position = &quot;dodge&quot;,
+               alpha = 0.5,
+               outlier.shape = NA) +
+  geom_point(aes(colour = genotype), 
+             position = position_jitterdodge()) +
+  facet_wrap(~treatment, ncol = 1)+
+  theme(axis.text.x = element_text(angle = 45, 
+                                   hjust = 1, vjust = 1)) +
+  labs(title = &quot;Number of turns performed by zebrafish across an hour &quot;, 
+       subtitle = &quot;Accoring to treatment and genotype&quot;,
+       y = &quot;Number of turns&quot;) +
+  scale_colour_viridis_d(end = 0.75) +
+  scale_fill_viridis_d(end = 0.75)</code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-19-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="statistical-test-1" class="section level2">
+<h2>statistical test</h2>
+<p>To test whether the genotype and/or treatment have a significant effect overall on the total number of turns, I fitted the per bin data to a negative binomial generalised linear mixed effect model. Since the start time of the test doesnt have a logical pattern (i.e. mrore active in morning), I’ve included it in the model as a random effect.</p>
+<p>The bin has a highly signifdicant effect on the total turns. This is consistent with what we have seen in the past using this test. The fish are more active when they first enter the maze and it drops off as they become more accustomed to it. Some statistical evidence is obsered for the <code>genotypehom:treatment10 µg Fe-citrate</code>effect. However, I wonder is this is truly real, as we only had 3 hets.</p>
+<pre class="r"><code>final_data_long %&gt;%
+  dplyr::distinct(rel_alts, .keep_all = T) %&gt;%
+  mutate(binforvis = case_when(
+    bin == 1 ~ &quot;0-10 mins&quot;, 
+    bin == 2 ~ &quot;10-20 mins&quot;, 
+    bin == 3 ~ &quot;20-30 mins&quot;, 
+    bin == 4 ~ &quot;30-40 mins&quot;, 
+    bin == 5 ~ &quot;40-50 mins&quot;, 
+    bin == 6 ~ &quot;50-60 mins&quot;
+    )) %&gt;% 
+  glmer.nb(total_turns ~ genotype*treatment + binforvis + (1|`start time`),
+         data = .) %&gt;%
+  summary %&gt;%
+  .$coef %&gt;%
+  as.data.frame() %&gt;% 
+  dplyr::rename(pval = &quot;Pr(&gt;|z|)&quot;) %&gt;% 
+  kable(caption = &quot;Negative binomial GLM model coefficients.\n
+      None of the factors have a significant effect on the total number of turns&quot; ) %&gt;%
+  kable_styling() %&gt;% 
+  row_spec(row = c(10,11), background = &quot;#ccffef&quot;)</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<p>Negative binomial GLM model coefficients.</p>
+<pre><code>  None of the factors have a significant effect on the total number of turns&lt;/caption&gt;</code></pre>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Std. Error
+</th>
+<th style="text-align:right;">
+z value
+</th>
+<th style="text-align:right;">
+pval
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+4.8452219
+</td>
+<td style="text-align:right;">
+0.1490623
+</td>
+<td style="text-align:right;">
+32.5046846
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+genotypehom
+</td>
+<td style="text-align:right;">
+0.0932835
+</td>
+<td style="text-align:right;">
+0.1287530
+</td>
+<td style="text-align:right;">
+0.7245155
+</td>
+<td style="text-align:right;">
+0.4687493
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment10 µg Fe-citrate
+</td>
+<td style="text-align:right;">
+-0.3778307
+</td>
+<td style="text-align:right;">
+0.1475400
+</td>
+<td style="text-align:right;">
+-2.5608695
+</td>
+<td style="text-align:right;">
+0.0104411
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment100 µg Fe-citrate
+</td>
+<td style="text-align:right;">
+-0.4001693
+</td>
+<td style="text-align:right;">
+0.1443136
+</td>
+<td style="text-align:right;">
+-2.7729141
+</td>
+<td style="text-align:right;">
+0.0055557
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+binforvis10-20 mins
+</td>
+<td style="text-align:right;">
+-0.1483441
+</td>
+<td style="text-align:right;">
+0.1011801
+</td>
+<td style="text-align:right;">
+-1.4661397
+</td>
+<td style="text-align:right;">
+0.1426102
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+binforvis20-30 mins
+</td>
+<td style="text-align:right;">
+-0.3055055
+</td>
+<td style="text-align:right;">
+0.1049006
+</td>
+<td style="text-align:right;">
+-2.9123343
+</td>
+<td style="text-align:right;">
+0.0035874
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+binforvis30-40 mins
+</td>
+<td style="text-align:right;">
+-0.5449332
+</td>
+<td style="text-align:right;">
+0.1052989
+</td>
+<td style="text-align:right;">
+-5.1751088
+</td>
+<td style="text-align:right;">
+0.0000002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+binforvis40-50 mins
+</td>
+<td style="text-align:right;">
+-0.6967512
+</td>
+<td style="text-align:right;">
+0.1020658
+</td>
+<td style="text-align:right;">
+-6.8264909
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+binforvis50-60 mins
+</td>
+<td style="text-align:right;">
+-0.6848482
+</td>
+<td style="text-align:right;">
+0.1030224
+</td>
+<td style="text-align:right;">
+-6.6475671
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;background-color: #ccffef !important;">
+genotypehom:treatment10 µg Fe-citrate
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.3785846
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.1823101
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+2.0765971
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.0378388
+</td>
+</tr>
+<tr>
+<td style="text-align:left;background-color: #ccffef !important;">
+genotypehom:treatment100 µg Fe-citrate
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.2494387
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.1715868
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+1.4537171
+</td>
+<td style="text-align:right;background-color: #ccffef !important;">
+0.1460248
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="time-spent-in-each-zone-of-the-y-maze" class="section level1">
+<h1>time spent in each zone of the Y-maze</h1>
+<p>I next will assess whether fish in each maze spend more or less time in each zone of the Y-maze (i.e. in each arm of the maze or the middle).</p>
+<p>In the plot below, the fish appear to spend less time in zone 4. This can be explained as zone 4 is the middle zone and the fish generally swim straight through it.</p>
+<pre class="r"><code>read_csv(&quot;data/ymaze/processed_data/fecit/time_in_zone.csv&quot;) %&gt;%
+  mutate(fish_id = as.character(fish_id)) %&gt;%
+  dplyr::select(fish_id, bin, zone, time_in_zone) %&gt;%
+  left_join(meta) %&gt;%
+  dplyr::filter(genotype %in% c(&quot;het&quot;, &quot;hom&quot;)) %&gt;% 
+  group_by(fish_id, zone) %&gt;%
+  mutate(total_timeInZone = sum(time_in_zone), 
+         zone = paste0(&quot;zone &quot;, zone)) %&gt;%
+  dplyr::distinct(total_timeInZone, .keep_all = TRUE) %&gt;%
+  ggplot(aes(x = treatment, y = total_timeInZone/60)) +
+  geom_quasirandom(aes(colour = genotype)
+                  ) +
+  geom_boxplot(aes(fill = genotype),
+               outlier.shape = NA,
+                alpha = 0.5) +
+  facet_wrap(~zone, nrow = 1) +
+  scale_y_log10() +
+  scale_fill_viridis_d(end = 0.75) +
+  scale_colour_viridis_d(end = 0.75) +
+  easy_rotate_x_labels(angle = -45) +
+  labs(y = &quot;Total time spent in each zone (mins, log scale)&quot;, 
+       title = &quot;Total time spent in each zone&quot;)</code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-21-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>I was curious to see whether which maze the fish were in (i.e. top left, middle etc) would have an effect on whether they spend more or less time in one of the arms of the mazes. There are 8 ymazes in each zantiks unit. inspection of the total time spent in each zone of the maze across the 8 possible positions in the zantiks unit didnt reveal any trends.</p>
+<p>There might have been something in position 6, zone 4. But this is only 2 data points and so not really reliable</p>
+<pre class="r"><code>read_csv(&quot;data/ymaze/processed_data/fecit/time_in_zone.csv&quot;) %&gt;%
+  mutate(fish_id = as.character(fish_id)) %&gt;%
+  dplyr::select(fish_id, bin, zone, time_in_zone) %&gt;%
+  left_join(meta) %&gt;%
+  dplyr::filter(genotype %in% c(&quot;het&quot;, &quot;hom&quot;)) %&gt;% 
+  group_by(fish_id, zone) %&gt;%
+  mutate(total_timeInZone = sum(time_in_zone), 
+         zone = paste0(&quot;zone &quot;, zone)) %&gt;%
+  dplyr::distinct(total_timeInZone, .keep_all = TRUE) %&gt;%
+  ggplot(aes(x = zone, y = total_timeInZone/60)) +
+  geom_quasirandom(aes(colour = genotype, 
+                       shape = treatment), 
+                   size = 2
+                  ) +
+  geom_boxplot(aes(fill = genotype),
+               outlier.shape = NA,
+                alpha = 0.5) +
+  facet_wrap(~YmazePosition) +
+  scale_y_log10() +
+  scale_fill_viridis_d(end = 0.75) +
+  scale_colour_viridis_d(end = 0.75) +
+  easy_rotate_x_labels(angle = -45) +
+  labs(y = &quot;Total time spent in each zone (mins, log scale)&quot;, 
+       title = &quot;Total time spent in each zone&quot;, 
+       subtitle = &quot;accoring to position in the ymaze&quot;)</code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-22-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>I alslo wanted to look at the average time spent in each zone.</p>
+<pre class="r"><code>read_csv(&quot;data/ymaze/processed_data/fecit/time_in_zone.csv&quot;) %&gt;%
+  mutate(fish_id = as.character(fish_id)) %&gt;%
+  dplyr::select(fish_id, bin, zone, time_in_zone) %&gt;%
+  left_join(meta) %&gt;%
+  group_by(fish_id, zone) %&gt;%
+  dplyr::filter(genotype %in% c(&quot;het&quot;, &quot;hom&quot;)) %&gt;% 
+  mutate(aveTimeInZone = mean(time_in_zone), 
+         zone = paste0(&quot;zone &quot;, zone)) %&gt;%
+  dplyr::distinct(aveTimeInZone, .keep_all = TRUE) %&gt;%
+  ggplot(aes(x = treatment, y =aveTimeInZone)) +
+  geom_quasirandom(aes(colour = genotype)
+                  ) +
+  geom_boxplot(aes(fill = genotype),
+               outlier.shape = NA,
+                alpha = 0.5) +
+  facet_wrap(~zone, nrow = 1) +
+  scale_y_log10() +
+  scale_fill_viridis_d(end = 0.75) +
+  scale_colour_viridis_d(end = 0.75) +
+  easy_rotate_x_labels(angle = -45) +
+  labs(y = &quot;Average time spent in each zone (mins, log scale)&quot;, 
+       title = &quot;Average time spent in each zone&quot;)</code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-23-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<div id="statistical-test-2" class="section level2">
+<h2>Statistical test</h2>
+<p>Here, I fit the average time spent in each zone of the maze to a linear mixed effect model. The <code>genotype x treatmetn x zone</code> effect is not significant, meaning there is not difference between the mutants and treatment groups.</p>
+<pre class="r"><code>fit &lt;- read_csv(&quot;data/ymaze/processed_data/fecit/time_in_zone.csv&quot;) %&gt;%
+  mutate(fish_id = as.character(fish_id)) %&gt;%
+  dplyr::select(fish_id, bin, zone, time_in_zone) %&gt;%
+  left_join(meta) %&gt;%
+  group_by(fish_id, zone) %&gt;%
+  dplyr::filter(genotype %in% c(&quot;het&quot;, &quot;hom&quot;)) %&gt;% 
+  mutate(aveTimeInZone = mean(time_in_zone), 
+         zone = paste0(&quot;zone &quot;, zone)) %&gt;%
+  dplyr::distinct(aveTimeInZone, .keep_all = TRUE) %&gt;%
+  lmer(log(aveTimeInZone) ~ (genotype + treatment + zone)^3 + (1|`start time`),
+    data = .)
+
+Anova(fit) %&gt;% 
+  kable(caption = &quot;linear mixed model: aveTimeInZone) ~ (genotype + treatment + zone)^3 + (1|`start time`)&quot; ) %&gt;%
+  kableExtra::row_spec(row = 7, bold = TRUE) %&gt;% 
+  kable_styling(full_width = FALSE)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+linear mixed model: aveTimeInZone) ~ (genotype + treatment + zone)^3 + (1|<code>start time</code>)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Chisq
+</th>
+<th style="text-align:right;">
+Df
+</th>
+<th style="text-align:right;">
+Pr(&gt;Chisq)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+genotype
+</td>
+<td style="text-align:right;">
+0.3053714
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.5805345
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment
+</td>
+<td style="text-align:right;">
+18.3424272
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.0001040
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+zone
+</td>
+<td style="text-align:right;">
+368.0439395
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+genotype:treatment
+</td>
+<td style="text-align:right;">
+24.3692432
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.0000051
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+genotype:zone
+</td>
+<td style="text-align:right;">
+0.3115124
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.9578490
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment:zone
+</td>
+<td style="text-align:right;">
+1.5458225
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0.9563928
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+genotype:treatment:zone
+</td>
+<td style="text-align:right;font-weight: bold;">
+0.8505818
+</td>
+<td style="text-align:right;font-weight: bold;">
+6
+</td>
+<td style="text-align:right;font-weight: bold;">
+0.9906483
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="check-for-handedness" class="section level1">
+<h1>check for handedness</h1>
+<p>Fontana et al. (<a href="https://doi.org/10.1007/s10071-019-01296-9" class="uri">https://doi.org/10.1007/s10071-019-01296-9</a>, Matt Parker’s group) showed that fish sometimes show a behavioural lateralisation (i.e. handedness). If fish show this, then they would perform less alternation tetragrams not due to working memory.</p>
+<p>The plot below circles each of the L_R bias groups.</p>
+<pre class="r"><code># make the LR bias object
+LR_Bias &lt;- final_data %&gt;%
+  dplyr::select(L, R, total_turns, fish_id) %&gt;%
+  group_by(fish_id) %&gt;%
+  mutate(L = sum(L),
+         R = sum(R),
+         total_turns = sum(total_turns),
+         L_R_bias = case_when( #consider more than 60% of the time performing a left or right turn to be a bias
+           L/total_turns &gt; 0.6 ~ &quot;Left&quot;,
+           R/total_turns &gt; 0.6 ~ &quot;Right&quot;,
+           TRUE ~ &quot;Neither&quot;
+         )) %&gt;%
+  dplyr::select(fish_id, L_R_bias) %&gt;%
+  unique() %&gt;%
+  mutate(L_R_bias = factor(L_R_bias,
+                           levels = c(&quot;Neither&quot;, &quot;Left&quot;, &quot;Right&quot;))
+  )</code></pre>
+<pre class="r"><code>ggarrange(
+final_data %&gt;%
+  left_join(LR_Bias) %&gt;%
+  group_by(fish_id) %&gt;%
+  mutate(L = sum(L),
+         R = sum(R),
+         total_turns = sum(total_turns)
+  ) %&gt;%
+  ggplot(aes(L, R)) +
+  geom_point(aes(shape = L_R_bias, colour = genotype),
+             size = 4) +
+  geom_mark_ellipse(aes(fill = L_R_bias, label = L_R_bias),
+                 alpha = 0.2, 
+                 con.cap = 0)+
+  labs(title = &quot;By genotype&quot;) +
+  scale_color_viridis_d(end = 0.75) +
+  theme(legend.position = &quot;bottom&quot;, 
+        aspect.ratio = 1) +
+  scale_x_continuous(limits = c(-10, 650)) +
+  scale_y_continuous(limits = c(-10, 650)) +
+  scale_fill_viridis_d(option = &quot;plasma&quot;), 
+
+final_data %&gt;%
+  left_join(LR_Bias) %&gt;%
+  group_by(fish_id) %&gt;%
+  mutate(L = sum(L),
+         R = sum(R),
+         total_turns = sum(total_turns)
+  ) %&gt;%
+  ggplot(aes(L, R)) +
+  geom_point(aes(shape = L_R_bias, colour = treatment),
+             size = 4) +
+  geom_mark_ellipse(aes(fill = L_R_bias, label = L_R_bias),
+                 alpha = 0.2, 
+                  con.cap = 0)+
+  labs(title = &quot;By treatment&quot;) +
+  scale_color_viridis_d(end = 0.75) +
+  scale_fill_viridis_d(option = &quot;plasma&quot;) +
+    scale_x_continuous(limits = c(-10, 650)) +
+  scale_y_continuous(limits = c(-10, 650)) +
+  theme(legend.position = &quot;bottom&quot;, 
+        aspect.ratio = 1)
+)</code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-26-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="test-for-changes-to-alternation" class="section level1">
+<h1>test for changes to alternation</h1>
+<p>Finally, I will now test for alternation changes using a generalised linear mixed effect model (beta-binomial distribution). We use this because it is count data which is over-dispersed, and fixed and random effects are included. The link function is logit.</p>
+<p>No significant effects are observed on working memory. Only the <code>L_R_bias</code> term is significant, this is to be expected, as they would probably be performing more repitiions.</p>
+<p>The <code>bin:genotype</code> effect is close (ish) to statistical significance. Meaning that this might have something there. but this does not take into account the treatment group.</p>
+<p>Note that I have ignored the effect of sex here. We have never really seen a sex effect in all of our ymaze analyses. And if i were to include this effect, we would only have 1 and sometimes no fish within each genotype and sex.</p>
+<pre class="r"><code>glm &lt;-
+  final_data %&gt;%
+  left_join(LR_Bias) %&gt;%
+  mutate(
+    non_alts = total_turns - alts,
+    bin = as.factor(bin)
+  ) %&gt;%
+  glmmTMB(
+    cbind(alts, non_alts) ~ (bin + genotype + treatment)^3 + L_R_bias + (1|`start time`) + (1|fish_id),
+    family = betabinomial(),
+    data = .
+  )
+
+Anova(glm) %&gt;%
+  as.data.frame() %&gt;%
+  dplyr::rename(pval = `Pr(&gt;Chisq)`) %&gt;%
+  kable() %&gt;%
+  kable_styling(full_width = FALSE) %&gt;% 
+  row_spec(row = 4, bold = TRUE)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Chisq
+</th>
+<th style="text-align:right;">
+Df
+</th>
+<th style="text-align:right;">
+pval
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+bin
+</td>
+<td style="text-align:right;">
+3.0400853
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.6938057
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+genotype
+</td>
+<td style="text-align:right;">
+0.1940662
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.6595537
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment
+</td>
+<td style="text-align:right;">
+2.6943315
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.2599761
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+L_R_bias
+</td>
+<td style="text-align:right;font-weight: bold;">
+12.5465992
+</td>
+<td style="text-align:right;font-weight: bold;">
+2
+</td>
+<td style="text-align:right;font-weight: bold;">
+0.0018860
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bin:genotype
+</td>
+<td style="text-align:right;">
+8.3690138
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.1370371
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bin:treatment
+</td>
+<td style="text-align:right;">
+4.5379563
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.9198341
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+genotype:treatment
+</td>
+<td style="text-align:right;">
+0.8839810
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.6427557
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bin:genotype:treatment
+</td>
+<td style="text-align:right;">
+7.3069917
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.6961799
+</td>
+</tr>
+</tbody>
+</table>
+<div id="vis" class="section level2">
+<h2>Vis</h2>
+<div id="bin-x-genotype-x-treatment" class="section level3">
+<h3>bin x genotype x treatment</h3>
+<pre class="r"><code>print(emmeans(glm, ~ genotype * treatment * bin), type = &quot;response&quot;) %&gt;% 
+  as_tibble() %&gt;% 
+  mutate(binforvis = case_when(
+    bin == 1 ~ &quot;0-10 mins&quot;, 
+    bin == 2 ~ &quot;10-20 mins&quot;, 
+    bin == 3 ~ &quot;20-30 mins&quot;, 
+    bin == 4 ~ &quot;30-40 mins&quot;, 
+    bin == 5 ~ &quot;40-50 mins&quot;, 
+    bin == 6 ~ &quot;50-60 mins&quot;
+    )) %&gt;% 
+  ggplot(aes(x = binforvis, y = prob, colour = genotype)) +
+  geom_col(aes(fill =genotype), 
+           alpha = 0.5,
+           width = 0.25,
+           position = position_dodge()) +
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL),
+                width = 0.125,
+                size = 1,
+                position = position_dodge(width = 0.25)) +
+  facet_wrap(~treatment, ncol = 1) +
+  theme(axis.text.x = element_text(hjust = 1,
+                               vjust = 1,
+                               angle = 45), 
+        legend.position = &quot;bottom&quot;) +
+  scale_color_viridis_d(end = 0.8, option = &quot;inferno&quot;) +
+  scale_fill_viridis_d(end = 0.8, option = &quot;inferno&quot;) +
+  labs(y = &quot;Estimated probability of alternation\n(LRLR + RLRL)&quot;,
+       x = &quot;Time interval&quot;, 
+       title = &quot;GLM predicted probability of zebrafish performing an alternation\ntetragram due to genotype and treatment&quot;, 
+       subtitle = &quot;No significant differences&quot;
+       )</code></pre>
+<pre><code> genotype treatment         bin  prob     SE  df lower.CL upper.CL
+ het      0.85% saline      1   0.152 0.0599 163   0.0667    0.309
+ hom      0.85% saline      1   0.159 0.0359 163   0.1005    0.244
+ het      10 µg Fe-citrate  1   0.143 0.0430 163   0.0771    0.250
+ hom      10 µg Fe-citrate  1   0.121 0.0321 163   0.0702    0.199
+ het      100 µg Fe-citrate 1   0.164 0.0458 163   0.0919    0.275
+ hom      100 µg Fe-citrate 1   0.192 0.0583 163   0.1019    0.333
+ het      0.85% saline      2   0.171 0.0616 163   0.0806    0.327
+ hom      0.85% saline      2   0.173 0.0368 163   0.1115    0.258
+ het      10 µg Fe-citrate  2   0.163 0.0473 163   0.0892    0.278
+ hom      10 µg Fe-citrate  2   0.149 0.0374 163   0.0892    0.239
+ het      100 µg Fe-citrate 2   0.241 0.0563 163   0.1478    0.369
+ hom      100 µg Fe-citrate 2   0.179 0.0553 163   0.0941    0.314
+ het      0.85% saline      3   0.213 0.0729 163   0.1026    0.389
+ hom      0.85% saline      3   0.134 0.0321 163   0.0827    0.211
+ het      10 µg Fe-citrate  3   0.131 0.0409 163   0.0691    0.235
+ hom      10 µg Fe-citrate  3   0.152 0.0395 163   0.0893    0.247
+ het      100 µg Fe-citrate 3   0.343 0.0695 163   0.2207    0.489
+ hom      100 µg Fe-citrate 3   0.132 0.0453 163   0.0651    0.249
+ het      0.85% saline      4   0.104 0.0482 163   0.0400    0.243
+ hom      0.85% saline      4   0.150 0.0344 163   0.0942    0.231
+ het      10 µg Fe-citrate  4   0.114 0.0388 163   0.0565    0.215
+ hom      10 µg Fe-citrate  4   0.128 0.0350 163   0.0732    0.214
+ het      100 µg Fe-citrate 4   0.208 0.0532 163   0.1215    0.332
+ hom      100 µg Fe-citrate 4   0.181 0.0563 163   0.0946    0.319
+ het      0.85% saline      5   0.105 0.0520 163   0.0379    0.259
+ hom      0.85% saline      5   0.154 0.0362 163   0.0951    0.239
+ het      10 µg Fe-citrate  5   0.116 0.0399 163   0.0575    0.221
+ hom      10 µg Fe-citrate  5   0.213 0.0486 163   0.1326    0.324
+ het      100 µg Fe-citrate 5   0.185 0.0512 163   0.1042    0.308
+ hom      100 µg Fe-citrate 5   0.182 0.0560 163   0.0953    0.318
+ het      0.85% saline      6   0.190 0.0786 163   0.0792    0.392
+ hom      0.85% saline      6   0.136 0.0334 163   0.0824    0.216
+ het      10 µg Fe-citrate  6   0.165 0.0499 163   0.0881    0.288
+ hom      10 µg Fe-citrate  6   0.155 0.0396 163   0.0914    0.250
+ het      100 µg Fe-citrate 6   0.182 0.0499 163   0.1031    0.301
+ hom      100 µg Fe-citrate 6   0.154 0.0515 163   0.0770    0.285
+
+Results are averaged over the levels of: L_R_bias 
+Confidence level used: 0.95 
+Intervals are back-transformed from the logit scale </code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-28-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="l-or-r-bias" class="section level3">
+<h3>L or R bias</h3>
+<pre class="r"><code>print(emmeans(glm, specs = &quot;L_R_bias&quot;), type = &quot;response&quot;) %&gt;%
+  as_tibble() %&gt;%
+  ggplot(aes(L_R_bias, prob, colour = L_R_bias)) +
+  geom_col(aes(fill = L_R_bias),
+           alpha = 0.5,
+           position = position_dodge(width = 0.5)) +
+  geom_errorbar(
+    aes(ymin = lower.CL, ymax = upper.CL),
+    width = 0.25,
+    size = 1,
+    position = position_dodge(width = 0.25)
+    ) +
+  ylab(&quot;Estimated probability of alternation&quot;) +
+  xlab(&quot;Time interval&quot;) +
+  theme(
+    axis.text.x = element_text(hjust = 1,
+                               vjust = 1,
+                               angle = 45)
+    ) +
+  scale_y_continuous(limits = c(0,0.3)) +
+  scale_color_viridis_d(end = 0.8, option = &quot;viridis&quot;) +
+  scale_fill_viridis_d(end = 0.8, option = &quot;viridis&quot;) +
+  ggtitle(&quot;GLM predicted probability of zebrafish performing an alternation\ntetragram due to having a LR bias&quot;,
+          subtitle = &quot;Effect of L or R Bias p = 0.002\naveraged out over genotypes, treatments and bins&quot;)</code></pre>
+<pre><code> L_R_bias  prob     SE  df lower.CL upper.CL
+ Neither  0.229 0.0200 163   0.1918    0.271
+ Left     0.163 0.0314 163   0.1102    0.235
+ Right    0.109 0.0224 163   0.0718    0.162
+
+Results are averaged over the levels of: bin, genotype, treatment 
+Confidence level used: 0.95 
+Intervals are back-transformed from the logit scale </code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-29-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+<div id="test-for-changes-in-repetitions" class="section level1">
+<h1>test for changes in repetitions</h1>
+<p>Repetitions are a sign of stress. Matt Parker says he sees increased repetitions when fish are pre-treated with a chemogenic stressor.</p>
+<p>I fitted the over-bins data to another generalised linear mixed effect model (beta-binomial distribution), this time compariing the reps vs non-reps (LLLL + RRRR).</p>
+<p>Only the LR Bias term is significant. This is also expected.</p>
+<pre class="r"><code>glm_reps &lt;- final_data %&gt;%
+  left_join(LR_Bias) %&gt;%
+  mutate(
+    non_reps = total_turns - reps,
+    bin = as.factor(bin)
+  ) %&gt;%
+  glmmTMB(
+    cbind(reps, non_reps) ~ (bin + genotype + treatment)^3 + L_R_bias + (1|`start time`) + (1|fish_id),
+    family = betabinomial(),
+    data = .
+  )
+
+glm_reps %&gt;%
+  Anova() %&gt;%
+  dplyr::rename(pval = `Pr(&gt;Chisq)`) %&gt;%
+  kable() %&gt;%
+  kable_styling(full_width = FALSE) %&gt;% 
+  row_spec(row = 4, bold = TRUE)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Chisq
+</th>
+<th style="text-align:right;">
+Df
+</th>
+<th style="text-align:right;">
+pval
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+bin
+</td>
+<td style="text-align:right;">
+0.7275268
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.9814238
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+genotype
+</td>
+<td style="text-align:right;">
+0.1305734
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.7178383
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment
+</td>
+<td style="text-align:right;">
+1.4272956
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.4898540
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+L_R_bias
+</td>
+<td style="text-align:right;font-weight: bold;">
+23.3808110
+</td>
+<td style="text-align:right;font-weight: bold;">
+2
+</td>
+<td style="text-align:right;font-weight: bold;">
+0.0000084
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bin:genotype
+</td>
+<td style="text-align:right;">
+5.9029692
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.3157752
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bin:treatment
+</td>
+<td style="text-align:right;">
+10.8759124
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.3672670
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+genotype:treatment
+</td>
+<td style="text-align:right;">
+0.4309589
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.8061548
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bin:genotype:treatment
+</td>
+<td style="text-align:right;">
+6.8372881
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.7407115
+</td>
+</tr>
+</tbody>
+</table>
+<div id="effect-of-genotype-x-treatment-x-bin" class="section level2">
+<h2>effect of genotype x treatment x bin</h2>
+<pre class="r"><code>print(emmeans(glm_reps, ~ genotype * treatment * bin), type = &quot;response&quot;) %&gt;% 
+  as_tibble() %&gt;% 
+  mutate(binforvis = case_when(
+    bin == 1 ~ &quot;0-10 mins&quot;, 
+    bin == 2 ~ &quot;10-20 mins&quot;, 
+    bin == 3 ~ &quot;20-30 mins&quot;, 
+    bin == 4 ~ &quot;30-40 mins&quot;, 
+    bin == 5 ~ &quot;40-50 mins&quot;, 
+    bin == 6 ~ &quot;50-60 mins&quot;
+    )) %&gt;% 
+  ggplot(aes(x = binforvis, y = prob, colour = genotype)) +
+  geom_col(aes(fill =genotype), 
+           alpha = 0.5,
+           width = 0.25,
+           position = position_dodge()) +
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL),
+                width = 0.125,
+                size = 1,
+                position = position_dodge(width = 0.25)) +
+  facet_wrap(~treatment, ncol = 1) +
+  theme(axis.text.x = element_text(hjust = 1,
+                               vjust = 1,
+                               angle = 45), 
+        legend.position = &quot;bottom&quot;) +
+  scale_color_viridis_d(end = 0.8, option = &quot;inferno&quot;) +
+  scale_fill_viridis_d(end = 0.8, option = &quot;inferno&quot;) +
+  labs(y = &quot;Estimated probability of alternation\n(LRLR + RLRL)&quot;,
+       x = &quot;Time interval&quot;, 
+       title = &quot;GLM predicted probability of zebrafish performing an repetition\ntetragram due to genotype and treatment&quot;, 
+       subtitle = &quot;No significant differences&quot;
+       )</code></pre>
+<pre><code> genotype treatment         bin   prob     SE  df lower.CL upper.CL
+ het      0.85% saline      1   0.0948 0.0430 163   0.0375    0.220
+ hom      0.85% saline      1   0.1763 0.0351 163   0.1172    0.257
+ het      10 µg Fe-citrate  1   0.2562 0.0583 163   0.1585    0.387
+ hom      10 µg Fe-citrate  1   0.2155 0.0482 163   0.1353    0.325
+ het      100 µg Fe-citrate 1   0.1601 0.0453 163   0.0892    0.271
+ hom      100 µg Fe-citrate 1   0.2301 0.0687 163   0.1220    0.391
+ het      0.85% saline      2   0.1374 0.0528 163   0.0621    0.277
+ hom      0.85% saline      2   0.1345 0.0304 163   0.0850    0.207
+ het      10 µg Fe-citrate  2   0.1961 0.0524 163   0.1123    0.320
+ hom      10 µg Fe-citrate  2   0.2346 0.0509 163   0.1490    0.349
+ het      100 µg Fe-citrate 2   0.1532 0.0442 163   0.0845    0.262
+ hom      100 µg Fe-citrate 2   0.2397 0.0708 163   0.1278    0.404
+ het      0.85% saline      3   0.2091 0.0683 163   0.1047    0.374
+ hom      0.85% saline      3   0.2069 0.0380 163   0.1418    0.292
+ het      10 µg Fe-citrate  3   0.1920 0.0516 163   0.1097    0.314
+ hom      10 µg Fe-citrate  3   0.1789 0.0453 163   0.1060    0.286
+ het      100 µg Fe-citrate 3   0.1261 0.0422 163   0.0635    0.235
+ hom      100 µg Fe-citrate 3   0.1853 0.0619 163   0.0918    0.338
+ het      0.85% saline      4   0.2255 0.0770 163   0.1087    0.410
+ hom      0.85% saline      4   0.1675 0.0336 163   0.1111    0.245
+ het      10 µg Fe-citrate  4   0.1941 0.0542 163   0.1083    0.323
+ hom      10 µg Fe-citrate  4   0.1620 0.0431 163   0.0936    0.266
+ het      100 µg Fe-citrate 4   0.1910 0.0538 163   0.1061    0.320
+ hom      100 µg Fe-citrate 4   0.1533 0.0568 163   0.0709    0.300
+ het      0.85% saline      5   0.1370 0.0632 163   0.0524    0.313
+ hom      0.85% saline      5   0.1450 0.0324 163   0.0919    0.221
+ het      10 µg Fe-citrate  5   0.2545 0.0623 163   0.1514    0.395
+ hom      10 µg Fe-citrate  5   0.1520 0.0438 163   0.0840    0.260
+ het      100 µg Fe-citrate 5   0.2029 0.0528 163   0.1178    0.327
+ hom      100 µg Fe-citrate 5   0.2022 0.0663 163   0.1012    0.363
+ het      0.85% saline      6   0.1178 0.0591 163   0.0417    0.291
+ hom      0.85% saline      6   0.1554 0.0320 163   0.1021    0.229
+ het      10 µg Fe-citrate  6   0.1413 0.0478 163   0.0702    0.264
+ hom      10 µg Fe-citrate  6   0.2463 0.0547 163   0.1544    0.369
+ het      100 µg Fe-citrate 6   0.1940 0.0501 163   0.1134    0.312
+ hom      100 µg Fe-citrate 6   0.1959 0.0668 163   0.0954    0.360
+
+Results are averaged over the levels of: L_R_bias 
+Confidence level used: 0.95 
+Intervals are back-transformed from the logit scale </code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-31-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="l-or-r-bias-1" class="section level2">
+<h2>L or R bias</h2>
+<pre class="r"><code>print(emmeans(glm_reps, specs = &quot;L_R_bias&quot;), type = &quot;response&quot;) %&gt;%
+  as_tibble() %&gt;%
+  ggplot(aes(L_R_bias, prob, colour = L_R_bias)) +
+  geom_col(aes(fill = L_R_bias),
+           alpha = 0.5,
+           position = position_dodge(width = 0.5)) +
+  geom_errorbar(
+    aes(ymin = lower.CL, ymax = upper.CL),
+    width = 0.25,
+    size = 1,
+    position = position_dodge(width = 0.25)
+    ) +
+  ylab(&quot;Estimated probability of alternation&quot;) +
+  xlab(&quot;Time interval&quot;) +
+  theme(
+    axis.text.x = element_text(hjust = 1,
+                               vjust = 1,
+                               angle = 45)
+    ) +
+  scale_y_continuous(limits = c(0,0.4)) +
+  scale_color_viridis_d(end = 0.8, option = &quot;viridis&quot;) +
+  scale_fill_viridis_d(end = 0.8, option = &quot;viridis&quot;) +
+  ggtitle(&quot;GLM predicted probability of zebrafish performing an repetition\ntetragram due to having a LR bias&quot;,
+          subtitle = &quot;Effect of L or R Bias p = 0.000008\naveraged out over genotypes, treatments and bins&quot;)</code></pre>
+<pre><code> L_R_bias  prob     SE  df lower.CL upper.CL
+ Neither  0.103 0.0109 163   0.0834    0.126
+ Left     0.211 0.0333 163   0.1527    0.284
+ Right    0.251 0.0475 163   0.1693    0.356
+
+Results are averaged over the levels of: bin, genotype, treatment 
+Confidence level used: 0.95 
+Intervals are back-transformed from the logit scale </code></pre>
+<p><img src="figure/FeCit_Ymaze_pilot.Rmd/unnamed-chunk-32-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.2 (2020-06-22)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Mojave 10.14.3
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] MASS_7.3-54        glmmTMB_1.1.1      emmeans_1.6.1      car_3.0-11        
+ [5] carData_3.0-4      performance_0.10.0 lme4_1.1-27.1      Matrix_1.3-4      
+ [9] broom_0.7.8        kableExtra_1.3.4   ggrepel_0.9.1      ggforce_0.3.3     
+[13] ggbeeswarm_0.6.0   ggfortify_0.4.12   ggeasy_0.1.3       ggpubr_0.4.0      
+[17] scales_1.1.1       magrittr_2.0.1     here_1.0.1         readxl_1.3.1      
+[21] forcats_0.5.1      stringr_1.4.0      dplyr_1.0.7        purrr_0.3.4       
+[25] readr_1.4.0        tidyr_1.1.3        tibble_3.1.2       ggplot2_3.3.6     
+[29] tidyverse_1.3.1   
+
+loaded via a namespace (and not attached):
+ [1] TH.data_1.0-10      minqa_1.2.4         colorspace_2.0-2   
+ [4] ggsignif_0.6.2      ellipsis_0.3.2      rio_0.5.27         
+ [7] rprojroot_2.0.2     estimability_1.3    fs_1.5.0           
+[10] rstudioapi_0.13     farver_2.1.0        fansi_0.5.0        
+[13] mvtnorm_1.1-2       lubridate_1.7.10    xml2_1.3.2         
+[16] codetools_0.2-18    splines_4.0.2       knitr_1.33         
+[19] polyclip_1.10-0     jsonlite_1.7.2      workflowr_1.6.2    
+[22] nloptr_1.2.2.2      dbplyr_2.1.1        compiler_4.0.2     
+[25] httr_1.4.2          backports_1.2.1     assertthat_0.2.1   
+[28] cli_3.0.0           later_1.2.0         tweenr_1.0.2       
+[31] htmltools_0.5.1.1   tools_4.0.2         coda_0.19-4        
+[34] gtable_0.3.0        glue_1.4.2          Rcpp_1.0.7         
+[37] cellranger_1.1.0    jquerylib_0.1.4     vctrs_0.3.8        
+[40] svglite_2.0.0       nlme_3.1-152        insight_0.18.6     
+[43] xfun_0.24           openxlsx_4.2.4      rvest_1.0.0        
+[46] lifecycle_1.0.0     rstatix_0.7.0       zoo_1.8-9          
+[49] hms_1.1.0           promises_1.2.0.1    sandwich_3.0-1     
+[52] TMB_1.7.20          yaml_2.2.1          curl_4.3.2         
+[55] gridExtra_2.3       sass_0.4.0          stringi_1.6.2      
+[58] highr_0.9           boot_1.3-28         zip_2.2.0          
+[61] rlang_0.4.11        pkgconfig_2.0.3     systemfonts_1.0.2  
+[64] evaluate_0.14       lattice_0.20-44     labeling_0.4.2     
+[67] cowplot_1.1.1       tidyselect_1.1.1    plyr_1.8.6         
+[70] R6_2.5.0            generics_0.1.0      multcomp_1.4-17    
+[73] DBI_1.1.1           pillar_1.6.1        haven_2.4.1        
+[76] foreign_0.8-81      withr_2.4.2         survival_3.2-11    
+[79] abind_1.4-5         modelr_0.1.8        crayon_1.4.1       
+[82] utf8_1.2.1          rmarkdown_2.9       grid_4.0.2         
+[85] data.table_1.14.0   git2r_0.28.0        reprex_2.0.0       
+[88] digest_0.6.27       webshot_0.5.2       xtable_1.8-4       
+[91] numDeriv_2016.8-1.1 httpuv_1.6.1        munsell_0.5.0      
+[94] beeswarm_0.4.0      viridisLite_0.4.0   vipor_0.4.5        
+[97] bslib_0.2.5.1      </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

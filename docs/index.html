@@ -270,6 +270,9 @@ $(document).ready(function () {
 <li>
   <a href="FeDex_fth1a_384well.html">FeDex_fth1a_384well</a>
 </li>
+<li>
+  <a href="FeCit_Ymaze.html">FeCit_Ymaze_pilot</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -315,7 +318,7 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-10-31
+<strong>Last updated:</strong> 2022-11-01
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -346,16 +349,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkarissab2022MPSsocietyironSupplementaiontreec5d59c3b576c6696d3e017257d6555b89eab1adftargetblankc5d59c3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/tree/c5d59c3b576c6696d3e017257d6555b89eab1adf" target="_blank">c5d59c3</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkarissab2022MPSsocietyironSupplementaiontreeb7abc796e7d02a7a4be253dd84d2505e43024ec7targetblankb7abc79a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/tree/b7abc796e7d02a7a4be253dd84d2505e43024ec7" target="_blank">b7abc79</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkarissab2022MPSsocietyironSupplementaiontreec5d59c3b576c6696d3e017257d6555b89eab1adftargetblankc5d59c3a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkarissab2022MPSsocietyironSupplementaiontreeb7abc796e7d02a7a4be253dd84d2505e43024ec7targetblankb7abc79a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/tree/c5d59c3b576c6696d3e017257d6555b89eab1adf" target="_blank">c5d59c3</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/tree/b7abc796e7d02a7a4be253dd84d2505e43024ec7" target="_blank">b7abc79</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -364,11 +367,13 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    data/.DS_Store
 
 Untracked files:
-    Untracked:  analysis/FeDex_fth1a_384well.Rmd
-    Untracked:  analysis/FeDex_irf7.Rmd
-    Untracked:  data/2022-10-25_193133_fth1a_experiment_2_384well.xlsx
+    Untracked:  analysis/FeCit_Ymaze_pilot.Rmd
+    Untracked:  code/FeCit-ymaze-rawDataProcessing.R
+    Untracked:  data/2022Oct19 ip injection FeCitrate naglu hom x het 6m meta.xlsx
+    Untracked:  data/ymaze/
 
 Unstaged changes:
     Modified:   analysis/_site.yml
@@ -411,6 +416,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/karissa-b/2022_MPS-society_ironSupplementaion/blob/b7abc796e7d02a7a4be253dd84d2505e43024ec7/analysis/index.Rmd" target="_blank">b7abc79</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-10-31
+</td>
+<td>
+more analys
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/karissa-b/2022_MPS-society_ironSupplementaion/b7abc796e7d02a7a4be253dd84d2505e43024ec7/docs/index.html" target="_blank">b7abc79</a>
+</td>
+<td>
+Karissa Barthelson
+</td>
+<td>
+2022-10-31
+</td>
+<td>
+more analys
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -486,23 +525,33 @@ First commit
 </div>
 </div>
 </div>
-<p>put some general grant info here.</p>
+<p>Mucopolysaccharidosis type III (MPS-III: Sanfilippo syndrome) is caused by a deficiency of one of four genes encoding enzymes involved in the degradation of the complex sugar molecule heparan sulfate in lysosomes (the “stomachs” of cells, where molecules are degraded into the building blocks for use). Deficiency of these enzymes results in progressive build-up of heparan sulfate in lysosomes, impairing their normal function of degrading and recycling molecules. While replacement of the defective enzyme in MPS-III is showing promise as a therapeutic strategy, not all children can access this treatment. Therefore, alternative therapies are required.</p>
+<p>One important function of lysosomes is to release iron for use in the cell. When lysosomes do not function properly, not enough iron can converted to its active form for use by the cell. This is really problematic, as iron plays a vital role in how cells produce energy. Recently, it has been shown that iron supplementation can overcome and restore the problems of dysfunctional lysosomes. Could this be a new therapeutic strategy for MPS-III?</p>
+<p>Before we start supplementing iron to human children with MPS-III, we must understand whether it will be beneficial. To begin collecting this critical information, we will test whether the supplementation of iron is beneficial to our animal models of this disease. Our animal model is a small freshwater fish called zebrafish, which is a very useful alternative to mammalian models. Here, we will test two different iron-supplements already approved for use in humans. We performed intraperitoneal injection of these iron types into zebrafish and harvested their brains.</p>
+<p>To first determine whether we are getting an iron-related response, we are performing qPCRs on some of the iron-transport genes: fth1a, tfr1a and tfr1b. To get an idea of whether it is therapeutic, we are testing expression of a couple of inflammatory genes: irf7. Additionally, we are performing a pilot behavioural analysis to assess whether we can see any behavioural differences.</p>
+<p>These experiments will support whether iron supplementation is a valid therapeutic strategy for MPS-III, and subsequently will provide the first steps towards establishing this as a new treatment for MPS-III.</p>
 <div id="qpcrs" class="section level1">
 <h1>qPCRs:</h1>
-<div id="iron-dextran-treament" class="section level2">
-<h2>Iron-dextran treament</h2>
+<div id="iron-dextran-treament" class="section level3">
+<h3>Iron-dextran treament</h3>
 <ul>
-<li><a href="FeDex_fth1a.html">ferritin heavy polypeptide 1a (fth1a))</a></li>
+<li><a href="FeDex_fth1a.html">ferritin heavy polypeptide 1a (fth1a)</a></li>
 <li><a href="FeDex_tfr1a.html">transferrin receptor 1a (tfr1a)</a></li>
 <li><a href="FeDex_tfr1b.html">transferrin receptor 1b (tfr1b)</a></li>
 <li><a href="FeDex_tfr1b.html">transferrin receptor 1b (tfr1b)</a></li>
 <li><a href="FeDex_fth1a_384well.html">ferritin heavy polypeptide 1a (fth1a) using 384-well plate)</a></li>
-<li><a href="FeDex_irf7.html">interferon regulatory factor 7(irf7))</a></li>
+<li><a href="FeDex_irf7.html">interferon regulatory factor 7(irf7)</a></li>
 </ul>
 </div>
-<div id="ferric-citrate-treatment" class="section level2">
-<h2>Ferric citrate treatment</h2>
+<div id="ferric-citrate-treatment" class="section level3">
+<h3>Ferric citrate treatment</h3>
 </div>
+</div>
+<div id="behaviour-analysis" class="section level1">
+<h1>behaviour analysis</h1>
+<ul>
+<li><a href="FeCit_Ymaze_pilot.html">ferric citrate y-maze pilot</a></li>
+</ul>
 </div>
 
 

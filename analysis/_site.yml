@@ -15,6 +15,8 @@ navbar:
     href: FeDex_irf7.html
   - text: FeDex_fth1a_384well
     href: FeDex_fth1a_384well.html
+  - text: FeCit_Ymaze_pilot
+    href: FeCit_Ymaze_pilot.html
 output:
   workflowr::wflow_html:
     toc: yes
