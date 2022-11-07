@@ -49,6 +49,8 @@ Here, we are assessing the level of *fth1a* transcripts in the brains of 6 month
 
 The *fth1a* transcript has an iron responsive element in the 5' untranslated region (3' UTR), and is predicted to decrease under high iron levels. 
 
+Previously, Ewan tried to assess the expression of fth1a using qPCRs using 96 well plate (see [here](FeDex_fth1a.html)). However, between-plate effects may have been masking any effect of genotype amnd/or treatment. Therefore, he has repeated the experiment using 96-well plates. This means that all samples, replicates and controls can be performed on the same plate and the batch effect is eliminated. 
+
 ```{r}
 # read in daa
 data <- read_xlsx("data/2022-10-25_193133_fth1a_experiment_2_384well.xlsx", 

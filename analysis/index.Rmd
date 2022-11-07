@@ -25,7 +25,6 @@ These experiments will support whether iron supplementation is a valid therapeut
 * [ferritin heavy polypeptide 1a (fth1a)](FeDex_fth1a.html)
 * [transferrin receptor 1a (tfr1a)](FeDex_tfr1a.html)
 * [transferrin receptor 1b (tfr1b)](FeDex_tfr1b.html)
-* [transferrin receptor 1b (tfr1b)](FeDex_tfr1b.html)
 * [ferritin heavy polypeptide 1a (fth1a) using 384-well plate)](FeDex_fth1a_384well.html)
 * [interferon regulatory factor 7(irf7)](FeDex_irf7.html)
 
